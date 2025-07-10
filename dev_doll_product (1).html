@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kawaii Developer Tee - DevDoll</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8e1e8 0%, #f0c4d1 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* GIANT WHITE FLUFFY CLOUDS */
+        .cloud-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .cloud-column {
+            position: absolute;
+            bottom: -400px;
+            font-size: 300px;
+            color: rgba(255, 255, 255, 0.7);
+            animation: cloud-rise linear infinite;
+            text-shadow: 0 0 50px rgba(255, 255, 255, 0.9);
+            white-space: pre-line;
+            line-height: 0.8;
+        }
+
+        @keyframes cloud-rise {
+            0% { 
+                bottom: -400px;
+                opacity: 0;
+            }
+            15% {
+                opacity: 1;
+            }
+            85% {
+                opacity: 1;
+            }
+            100% { 
+                bottom: 120vh;
+                opacity: 0;
+            }
+        }
+
+        .top-banner {
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.4), rgba(255, 105, 180, 0.3));
+            text-align: center;
+            padding: 12px;
+            font-size: 13px;
+            color: #ff1493;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 182, 193, 0.1));
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff1493;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 10px rgba(255, 105, 180, 0.6);
+            order: 1;
+        }
+
+        .logo-image {
+            width: 40px;
+            height: 40px;
+            background-image: url('images/devdoll.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .logo:hover {
+            transform: scale(1.05);
+            color: #ff69b4;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 1);
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+            order: 2;
+            margin: 0 20px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 45px 12px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 25px;
+            font-size: 14px;
+            color: #8b4d6b;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            order: 3;
+        }
+
+        .cart-icon {
+            position: relative;
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.8), rgba(255, 105, 180, 0.6));
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff6b35;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        .back-btn {
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.1), rgba(255, 105, 180, 0.05));
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            color: #ff1493;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.2), rgba(255, 105, 180, 0.1));
+            border-color: #ff1493;
+            transform: translateX(-5px);
+        }
+
+        /* PRODUCT SELECTOR */
+        .product-selector {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+
+        .product-dropdown {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 25px;
+            font-size: 16px;
+            color: #8b4d6b;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .product-dropdown:hover {
+            border-color: #ff1493;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        /* BREADCRUMBS */
+        .breadcrumbs {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb-list {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(139, 77, 107, 0.8);
+            font-size: 14px;
+        }
+
+        .breadcrumb-list a {
+            color: #ff1493;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb-list a:hover {
+            color: #ff69b4;
+        }
+
+        /* PRODUCT SECTION */
+        .product-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* PRODUCT IMAGES */
+        .product-images {
+            position: sticky;
+            top: 120px;
+        }
+
+        .main-image-container {
+            position: relative;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            aspect-ratio: 1;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            color: white;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .main-image.product-image {
+            font-size: 0;
+        }
+
+        .main-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            animation: sparkleRotate 6s linear infinite;
+        }
+
+        @keyframes sparkleRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .image-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .thumbnail {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            backdrop-filter: blur(5px);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .thumbnail.product-thumb {
+            font-size: 0;
+        }
+
+        .thumbnail.active {
+            border-color: #ff1493;
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.6);
+        }
+
+        .thumbnail:hover {
+            border-color: #ff69b4;
+            transform: scale(1.05);
+        }
+
+        .thumbnail-label {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: #ff1493;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2px 6px;
+            border-radius: 8px;
+        }
+
+        /* PRODUCT INFO */
+        .product-info {
+            padding: 20px 0;
+        }
+
+        .product-title {
+            font-size: 2.5rem;
+            color: #8b4d6b;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 20px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+
+        .review-count {
+            color: rgba(139, 77, 107, 0.8);
+            font-size: 14px;
+        }
+
+        .review-count a {
+            color: #ff1493;
+            text-decoration: none;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .current-price {
+            font-size: 2rem;
+            color: #ff1493;
+            font-weight: bold;
+        }
+
+        .original-price {
+            font-size: 1.2rem;
+            color: rgba(139, 77, 107, 0.6);
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            background: linear-gradient(45deg, #ff6b35, #ff4500);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .product-description {
+            color: rgba(139, 77, 107, 0.9);
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        /* SIZE SELECTOR */
+        .size-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #ff1493;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .size-option {
+            min-width: 50px;
+            height: 50px;
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ff1493;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            padding: 0 10px;
+            font-size: 14px;
+        }
+
+        .size-option:hover {
+            border-color: #ff1493;
+            background: rgba(255, 20, 147, 0.1);
+            transform: scale(1.05);
+        }
+
+        .size-option.selected {
+            border-color: #ff1493;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.6);
+        }
+
+        .size-option.out-of-stock {
+            opacity: 0.4;
+            cursor: not-allowed;
+            position: relative;
+        }
+
+        .size-option.out-of-stock::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ff1493;
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        /* COLOR SELECTOR */
+        .color-section {
+            margin-bottom: 30px;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .color-option.selected {
+            border-color: #ff1493;
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.6);
+            transform: scale(1.1);
+        }
+
+        .color-pink { background: linear-gradient(45deg, #ff69b4, #ff1493); }
+        .color-purple { background: linear-gradient(45deg, #8b5cf6, #a855f7); }
+        .color-blue { background: linear-gradient(45deg, #3b82f6, #1d4ed8); }
+        .color-green { background: linear-gradient(45deg, #10b981, #059669); }
+        .color-white { background: linear-gradient(45deg, #ffffff, #f8f9fa); }
+        .color-cream { background: linear-gradient(45deg, #fdf2e9, #f3e5ab); }
+        .color-beige { background: linear-gradient(45deg, #f5f5dc, #e6d7c3); }
+        .color-teal { background: linear-gradient(45deg, #14b8a6, #0891b2); }
+        .color-mint { background: linear-gradient(45deg, #6ee7b7, #34d399); }
+        .color-yellow { background: linear-gradient(45deg, #fbbf24, #f59e0b); }
+
+        /* QUANTITY SELECTOR */
+        .quantity-section {
+            margin-bottom: 30px;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: none;
+            color: #ff1493;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:hover {
+            background: rgba(255, 20, 147, 0.1);
+            color: #ff69b4;
+        }
+
+        .qty-input {
+            width: 60px;
+            text-align: center;
+            border: none;
+            background: none;
+            color: #ff1493;
+            font-weight: bold;
+            font-size: 16px;
+            outline: none;
+        }
+
+        /* ACTION BUTTONS */
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .add-to-cart-btn {
+            flex: 1;
+            min-width: 200px;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-to-cart-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .add-to-cart-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 20, 147, 0.8);
+        }
+
+        .add-to-cart-btn:hover::before {
+            left: 100%;
+        }
+
+        .wishlist-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 50%;
+            color: #ff1493;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .wishlist-btn:hover {
+            border-color: #ff1493;
+            background: rgba(255, 20, 147, 0.1);
+            transform: scale(1.1);
+        }
+
+        .wishlist-btn.active {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border-color: #ff1493;
+        }
+
+        /* PRODUCT DETAILS TABS */
+        .product-tabs {
+            border-top: 2px solid rgba(255, 20, 147, 0.2);
+            padding-top: 30px;
+        }
+
+        .tab-headers {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 20, 147, 0.2);
+        }
+
+        .tab-header {
+            color: rgba(139, 77, 107, 0.7);
+            cursor: pointer;
+            padding: 10px 0;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-header.active {
+            color: #ff1493;
+            border-bottom-color: #ff1493;
+        }
+
+        .tab-content {
+            display: none;
+            color: rgba(139, 77, 107, 0.9);
+            line-height: 1.6;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* MOBILE STYLES */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px;
+                flex-wrap: wrap;
+            }
+
+            .search-container {
+                order: 3;
+                width: 100%;
+                margin: 10px 0;
+                max-width: none;
+            }
+
+            .product-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 0 15px 40px;
+            }
+
+            .product-images {
+                position: static;
+            }
+
+            .product-title {
+                font-size: 2rem;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+
+            .add-to-cart-btn {
+                min-width: auto;
+            }
+
+            .size-options, .color-options {
+                justify-content: center;
+            }
+
+            .tab-headers {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Giant White Fluffy Clouds -->
+    <div class="cloud-bg" id="cloudBg"></div>
+
+    <div class="top-banner">
+        🌸 You bring the vibe, we'll bring the fluff — shipping's on us over $25!
+    </div>
+
+    <header class="header">
+        <div class="logo">🎀 DevDoll</div>
+        
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search cute developer merch..." id="searchBox">
+            <button class="search-btn" id="searchBtn">🔍</button>
+        </div>
+
+        <div class="header-actions">
+            <a href="#" class="back-btn">← Back to Shop</a>
+            <button class="cart-icon" id="cartBtn">
+                🛒
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Product Selector -->
+    <div class="product-selector">
+        <select class="product-dropdown" id="productSelector">
+            <!-- Options will be populated by JavaScript -->
+        </select>
+    </div>
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <div class="breadcrumb-list" id="breadcrumbList">
+            <a href="#">Home</a> 
+            <span>→</span> 
+            <a href="#" id="breadcrumbCategory">Tees</a> 
+            <span>→</span> 
+            <span id="breadcrumbProduct">Kawaii Girl Developer Tube Top</span>
+        </div>
+    </div>
+
+    <!-- Product Container -->
+    <div class="product-container">
+        <!-- Product Images -->
+        <div class="product-images">
+            <div class="main-image-container">
+                <div class="main-image" id="mainImage">
+                    🎀
+                </div>
+            </div>
+            <div class="image-thumbnails">
+                <div class="thumbnail active" data-image="front">
+                    <div class="thumbnail-label">Front</div>
+                </div>
+                <div class="thumbnail" data-image="back">
+                    <div class="thumbnail-label">Back</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="product-info">
+            <h1 class="product-title" id="productTitle">Kawaii Girl Developer Tube Top</h1>
+            
+            <div class="product-rating">
+                <div class="stars" id="productStars">★★★★★</div>
+                <div class="review-count">
+                    <span id="reviewCount">42</span> reviews
+                </div>
+            </div>
+
+            <div class="product-price">
+                <span class="current-price" id="currentPrice">$12.00</span>
+                <span class="original-price" id="originalPrice">$16.00</span>
+                <span class="discount-badge" id="discountBadge">25% OFF</span>
+            </div>
+
+            <div class="product-description" id="productDescription">
+                Pink bandeau top featuring cute kawaii girl developer at her laptop with coding vibes
+            </div>
+
+            <!-- Size Selection -->
+            <div class="size-section">
+                <div class="section-title">Size</div>
+                <div class="size-options" id="sizeOptions">
+                    <div class="size-option selected" data-size="XS">XS</div>
+                    <div class="size-option" data-size="S">S</div>
+                    <div class="size-option" data-size="M">M</div>
+                    <div class="size-option" data-size="L">L</div>
+                </div>
+            </div>
+
+            <!-- Color Selection -->
+            <div class="color-section">
+                <div class="section-title">Color</div>
+                <div class="color-options" id="colorOptions">
+                    <div class="color-option color-pink selected" data-color="pink"></div>
+                    <div class="color-option color-white" data-color="white"></div>
+                </div>
+            </div>
+
+            <!-- Quantity -->
+            <div class="quantity-section">
+                <div class="section-title">Quantity</div>
+                <div class="quantity-selector">
+                    <div class="quantity-controls">
+                        <button class="qty-btn" id="qtyMinus">−</button>
+                        <input type="number" class="qty-input" id="qtyInput" value="1" min="1" max="10">
+                        <button class="qty-btn" id="qtyPlus">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="product-actions">
+                <button class="add-to-cart-btn" id="addToCartBtn">
+                    Add to Cart - $12.00
+                </button>
+                <button class="wishlist-btn" id="wishlistBtn">♡</button>
+            </div>
+
+            <!-- Product Details Tabs -->
+            <div class="product-tabs">
+                <div class="tab-headers">
+                    <div class="tab-header active" data-tab="details">Details</div>
+                    <div class="tab-header" data-tab="care">Care</div>
+                    <div class="tab-header" data-tab="shipping">Shipping</div>
+                </div>
+                
+                <div class="tab-content active" id="details">
+                    <strong>Material:</strong> <span id="materialInfo">100% premium cotton blend</span><br>
+                    <strong>Fit:</strong> <span id="fitInfo">Relaxed fit with slightly dropped shoulders</span><br>
+                    <strong>Design:</strong> <span id="designInfo">Screen-printed kawaii graphics</span><br>
+                    <strong>Origin:</strong> Ethically made with love<br>
+                    <strong>Special:</strong> <span id="specialInfo">Extra soft for maximum coding comfort</span>
+                </div>
+                
+                <div class="tab-content" id="care">
+                    <strong>Washing:</strong> Machine wash cold with like colors<br>
+                    <strong>Drying:</strong> Tumble dry low or hang dry<br>
+                    <strong>Ironing:</strong> Iron inside out on low heat<br>
+                    <strong>Storage:</strong> Store flat to maintain kawaii cuteness<br>
+                    <strong>Tip:</strong> Wash with kawaii intent for maximum fluffiness! 💕
+                </div>
+                
+                <div class="tab-content" id="shipping">
+                    <strong>Free Shipping:</strong> On orders over $25<br>
+                    <strong>Standard:</strong> 3-5 business days ($4.99)<br>
+                    <strong>Express:</strong> 1-2 business days ($9.99)<br>
+                    <strong>International:</strong> 7-14 business days<br>
+                    <strong>Packaging:</strong> Arrives in adorable eco-friendly packaging! 🌸
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Products Database with all 14 products
+        const allProducts = [
+            // CROP TEES/BANDEAUS (8 products from the clothing images)
+            { 
+                id: 1, 
+                name: 'Kawaii Girl Developer Tube Top', 
+                price: 12, 
+                originalPrice: 16, 
+                rating: 5, 
+                reviews: 42, 
+                frontImage: 'images/1.png', 
+                backImage: 'images/2.png',
+                sizes: ['xs', 's', 'm', 'l'], 
+                colors: ['pink', 'white'], 
+                category: 'Tees',
+                type: 'crop-tee', 
+                description: 'Pink bandeau top featuring cute kawaii girl developer at her laptop with coding vibes',
+                material: '100% premium cotton blend',
+                fit: 'Relaxed bandeau fit',
+                design: 'Screen-printed kawaii developer graphics',
+                special: 'Ultra-soft fabric perfect for coding sessions'
+            },
+            { 
+                id: 2, 
+                name: 'Multi-Monitor Dev Girl Bandeau', 
+                price: 13, 
+                originalPrice: 17, 
+                rating: 5, 
+                reviews: 67, 
+                frontImage: 'images/3.png', 
+                backImage: 'images/4.png',
+                sizes: ['s', 'm', 'l', 'xl'], 
+                colors: ['purple', 'pink'], 
+                category: 'Tees',
+                type: 'crop-tee', 
+                description: 'Purple bandeau with kawaii developer girl surrounded by multiple colorful heart monitors',
+                material: '100% premium cotton blend',
+                fit: 'Comfortable bandeau style',
+                design: 'Multi-monitor kawaii design',
+                special: 'Perfect for multi-tasking developers'
+            },
+            { 
+                id: 3, 
+                name: 'Magical Code Fairy Bandeau', 
+                price: 10, 
+                originalPrice: 13, 
+                rating: 4.8, 
+                reviews: 38, 
+                frontImage: 'images/5.png', 
+                backImage: 'images/6.png',
+                sizes: ['s', 'm', 'l', 'xl'], 
+                colors: ['white'], 
+                category: 'Tees',
+                type: 'crop-tee', 
+                description: 'White bandeau featuring magical fairy developer with sparkles and coding magic',
+                material: '100% premium cotton blend',
+                fit: 'Relaxed bandeau fit',
+                design: 'Magical fairy coding graphics',
+                special: 'Brings coding magic to your wardrobe'
+            },
+            { 
+                id: 4, 
+                name: 'Pink Hoodie Coder Sweatshirt', 
+                price: 22, 
+                originalPrice: 29, 
+                rating: 4.8, 
+                reviews: 45, 
+                frontImage: 'images/7.png', 
+                backImage: 'images/8.png',
+                sizes: ['xs', 's', 'm', 'l', 'xl'], 
+                colors: ['pink'], 
+                category: 'Hoodies',
+                type: 'hoodie', 
+                description: 'Pink sweatshirt with cute developer girl in glasses and modern aesthetic design',
+                material: '80% cotton, 20% polyester fleece',
+                fit: 'Relaxed hoodie fit with drawstrings',
+                design: 'Modern kawaii developer aesthetic',
+                special: 'Perfect for cozy coding sessions'
+            },
+            { 
+                id: 5, 
+                name: 'Unicorn Dreams Coder Sweatshirt', 
+                price: 24, 
+                originalPrice: 32, 
+                rating: 5, 
+                reviews: 72, 
+                frontImage: 'images/9.png', 
+                backImage: 'images/10.png',
+                sizes: ['xs', 's', 'm', 'l'], 
+                colors: ['blue'], 
+                category: 'Hoodies',
+                type: 'hoodie', 
+                description: 'Light blue sweatshirt with unicorn-haired developer girl and dreamy coding vibes',
+                material: '80% cotton, 20% polyester fleece',
+                fit: 'Comfortable oversized fit',
+                design: 'Unicorn-themed coding dreams',
+                special: 'Makes coding feel magical'
+            },
+            { 
+                id: 6, 
+                name: 'Coffee Queen Developer Sweatshirt', 
+                price: 23, 
+                originalPrice: 30, 
+                rating: 4.9, 
+                reviews: 51, 
+                frontImage: 'images/11.png', 
+                backImage: 'images/12.png',
+                sizes: ['s', 'm', 'l'], 
+                colors: ['beige'], 
+                category: 'Hoodies',
+                type: 'hoodie', 
+                description: 'Beige sweatshirt featuring blonde developer girl with coffee cup - perfect for caffeine lovers',
+                material: '80% cotton, 20% polyester fleece',
+                fit: 'Relaxed comfort fit',
+                design: 'Coffee-loving developer vibes',
+                special: 'Perfect for coffee-fueled coding marathons'
+            },
+            { 
+                id: 7, 
+                name: 'Pink Hoodie Cat Girl Tee', 
+                price: 18, 
+                originalPrice: 24, 
+                rating: 4.6, 
+                reviews: 38, 
+                frontImage: 'images/13.png', 
+                backImage: 'images/14.png',
+                sizes: ['xs', 's', 'm', 'l', 'xl'], 
+                colors: ['pink'], 
+                category: 'Tees',
+                type: 'crop-tee', 
+                description: 'Pink crop tee with adorable cat-eared girl developer surrounded by colorful code windows',
+                material: '100% premium cotton blend',
+                fit: 'Relaxed crop tee fit',
+                design: 'Cat-eared kawaii developer',
+                special: 'Combines cuteness with coding passion'
+            },
+            { 
+                id: 8, 
+                name: 'Cloud Developer Girl Tee', 
+                price: 16, 
+                originalPrice: 21, 
+                rating: 4.7, 
+                reviews: 35, 
+                frontImage: 'images/15.png', 
+                backImage: 'images/16.png',
+                sizes: ['xs', 's', 'm', 'l'], 
+                colors: ['yellow'], 
+                category: 'Tees',
+                type: 'crop-tee', 
+                description: 'Soft yellow crop tee with dreamy developer girl floating on clouds with her laptop',
+                material: '100% premium cotton blend',
+                fit: 'Relaxed crop tee fit',
+                design: 'Cloud computing kawaii style',
+                special: 'Perfect for cloud developers'
+            },
+            // PHONE CASES (3 products from phone case images)
+            { 
+                id: 9, 
+                name: 'Pixel Perfect Heart Phone Case', 
+                price: 15, 
+                originalPrice: 20, 
+                rating: 4.9, 
+                reviews: 124, 
+                frontImage: 'images/Untitled design (16).png', 
+                backImage: 'images/Untitled design (16).png',
+                sizes: ['iPhone'], 
+                colors: ['purple'], 
+                category: 'Phone Cases',
+                type: 'phone-case', 
+                description: 'Purple phone case with kawaii girl holding glowing pink pixel heart with "PIXEL PERFECT" text',
+                material: 'Durable polycarbonate with soft TPU edges',
+                fit: 'Precise cutouts for all ports',
+                design: 'Pixel perfect kawaii graphics',
+                special: 'Drop protection meets kawaii style'
+            },
+            { 
+                id: 10, 
+                name: 'Digital Divine Goddess Case', 
+                price: 16, 
+                originalPrice: 21, 
+                rating: 4.8, 
+                reviews: 98, 
+                frontImage: 'images/Untitled design (15).png', 
+                backImage: 'images/Untitled design (15).png',
+                sizes: ['iPhone'], 
+                colors: ['teal'], 
+                category: 'Phone Cases',
+                type: 'phone-case', 
+                description: 'Teal phone case featuring beautiful red-haired digital goddess with flowing binary code design',
+                material: 'Durable polycarbonate with soft TPU edges',
+                fit: 'Precise cutouts for all ports',
+                design: 'Digital goddess with binary code',
+                special: 'Channel your inner digital deity'
+            },
+            { 
+                id: 11, 
+                name: 'Code Magic Phone Case', 
+                price: 16, 
+                originalPrice: 21, 
+                rating: 4.8, 
+                reviews: 98, 
+                frontImage: 'images/Untitled design (17).png', 
+                backImage: 'images/Untitled design (17).png',
+                sizes: ['iPhone'], 
+                colors: ['blue'], 
+                category: 'Phone Cases',
+                type: 'phone-case', 
+                description: 'Blue phone case featuring mystical code magic with ethereal developer vibes',
+                material: 'Durable polycarbonate with soft TPU edges',
+                fit: 'Precise cutouts for all ports',
+                design: 'Mystical coding magic theme',
+                special: 'Protect your phone with coding magic'
+            },
+            // MUGS (3 products from mug images)  
+            { 
+                id: 12, 
+                name: 'Just Me and Coffee Pink Mug', 
+                price: 14, 
+                originalPrice: 19, 
+                rating: 4.8, 
+                reviews: 156, 
+                frontImage: 'images/just me and coffee.png', 
+                backImage: 'images/just me and coffee.png',
+                sizes: ['11oz'], 
+                colors: ['pink'], 
+                category: 'Mugs',
+                type: 'mug', 
+                description: 'Adorable pink mug with "just me and coffee" text and kawaii girl surrounded by colorful coffee cups',
+                material: 'Premium ceramic with glossy finish',
+                fit: '11oz capacity, perfect for morning coffee',
+                design: 'Coffee-loving kawaii developer',
+                special: 'Microwave and dishwasher safe'
+            },
+            { 
+                id: 13, 
+                name: 'Sakura Developer Girl Mug', 
+                price: 15, 
+                originalPrice: 20, 
+                rating: 4.9, 
+                reviews: 134, 
+                frontImage: 'images/just me and coffee (1).png', 
+                backImage: 'images/just me and coffee (1).png',
+                sizes: ['11oz'], 
+                colors: ['pink'], 
+                category: 'Mugs',
+                type: 'mug', 
+                description: 'Pink mug featuring anime-style developer girl with cherry blossom hair accessories and dual monitor setup',
+                material: 'Premium ceramic with glossy finish',
+                fit: '11oz capacity, perfect for tea or coffee',
+                design: 'Sakura-themed anime developer',
+                special: 'Brings Japanese kawaii culture to coding'
+            },
+            { 
+                id: 14, 
+                name: 'Cozy Hoodie Coder Blue Mug', 
+                price: 13, 
+                originalPrice: 17, 
+                rating: 4.7, 
+                reviews: 98, 
+                frontImage: 'images/Untitled design (14).png', 
+                backImage: 'images/Untitled design (14).png',
+                sizes: ['11oz'], 
+                colors: ['mint'], 
+                category: 'Mugs',
+                type: 'mug', 
+                description: 'Mint blue mug with cozy cat-eared hoodie girl, teddy bear, and multiple coding screens - ultimate comfort vibes',
+                material: 'Premium ceramic with glossy finish',
+                fit: '11oz capacity, ergonomic handle',
+                design: 'Cozy coding comfort theme',
+                special: 'Perfect for late-night coding sessions'
+            }
+        ];
+
+        // Current product state
+        let currentProduct = allProducts[0];
+        let cart = [];
+        let cartCount = 0;
+
+        // Color class mapping
+        const colorClasses = {
+            'pink': 'color-pink',
+            'purple': 'color-purple',
+            'blue': 'color-blue',
+            'green': 'color-green',
+            'white': 'color-white',
+            'beige': 'color-beige',
+            'teal': 'color-teal',
+            'mint': 'color-mint',
+            'yellow': 'color-yellow'
+        };
+
+        // Cloud Background
+        function createFluffyClouds() {
+            const cloudBg = document.getElementById('cloudBg');
+            if (!cloudBg) return;
+            
+            const cloudSymbols = ['☁️'];
+            
+            for (let i = 0; i < 4; i++) {
+                setTimeout(() => {
+                    const column = document.createElement('div');
+                    column.className = 'cloud-column';
+                    column.style.left = Math.random() * 100 + '%';
+                    column.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                    column.style.animationDelay = Math.random() * 8 + 's';
+                    
+                    column.textContent = cloudSymbols[0];
+                    cloudBg.appendChild(column);
+                    
+                    setTimeout(() => {
+                        if (column.parentNode) {
+                            column.remove();
+                        }
+                    }, 35000);
+                }, i * 1000);
+            }
+            
+            setInterval(() => {
+                if (cloudBg.children.length < 3) {
+                    const column = document.createElement('div');
+                    column.className = 'cloud-column';
+                    column.style.left = Math.random() * 100 + '%';
+                    column.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                    
+                    column.textContent = cloudSymbols[0];
+                    cloudBg.appendChild(column);
+                    
+                    setTimeout(() => {
+                        if (column.parentNode) {
+                            column.remove();
+                        }
+                    }, 35000);
+                }
+            }, 8000);
+        }
+
+        // Update product display
+        function updateProductDisplay(product) {
+            console.log('Updating product display for:', product.name);
+            
+            // Update basic info
+            document.getElementById('productTitle').textContent = product.name;
+            document.getElementById('currentPrice').textContent = `${product.price.toFixed(2)}`;
+            document.getElementById('originalPrice').textContent = `${product.originalPrice.toFixed(2)}`;
+            document.getElementById('productDescription').textContent = product.description;
+            document.getElementById('reviewCount').textContent = product.reviews;
+            
+            // Update discount
+            const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+            document.getElementById('discountBadge').textContent = `${discount}% OFF`;
+            
+            // Update stars
+            const stars = '★'.repeat(Math.floor(product.rating)) + '☆'.repeat(5 - Math.floor(product.rating));
+            document.getElementById('productStars').textContent = stars;
+            
+            // Update breadcrumb
+            document.getElementById('breadcrumbCategory').textContent = product.category;
+            document.getElementById('breadcrumbProduct').textContent = product.name;
+            
+            // Update add to cart button
+            document.getElementById('addToCartBtn').textContent = `Add to Cart - ${product.price.toFixed(2)}`;
+            
+            // Update product details
+            document.getElementById('materialInfo').textContent = product.material;
+            document.getElementById('fitInfo').textContent = product.fit;
+            document.getElementById('designInfo').textContent = product.design;
+            document.getElementById('specialInfo').textContent = product.special;
+            
+            // Update images
+            updateProductImages(product);
+            
+            // Update sizes
+            updateSizeOptions(product);
+            
+            // Update colors
+            updateColorOptions(product);
+            
+            // Reset quantity
+            document.getElementById('qtyInput').value = 1;
+        }
+
+        // Update product images
+        function updateProductImages(product) {
+            const mainImage = document.getElementById('mainImage');
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            
+            console.log('Updating images for:', product.name, 'Front:', product.frontImage);
+            
+            // Set main image to front by default
+            if (product.frontImage) {
+                mainImage.style.backgroundImage = `url('${product.frontImage}')`;
+                mainImage.style.backgroundSize = 'contain';
+                mainImage.style.backgroundPosition = 'center';
+                mainImage.style.backgroundRepeat = 'no-repeat';
+                mainImage.textContent = '';
+                mainImage.classList.add('product-image');
+            } else {
+                // Fallback for products without images
+                mainImage.style.backgroundImage = 'none';
+                mainImage.textContent = '🎀';
+                mainImage.classList.remove('product-image');
+            }
+            
+            // Update thumbnails if they exist
+            if (thumbnails.length >= 2) {
+                // Front thumbnail
+                if (product.frontImage) {
+                    thumbnails[0].style.backgroundImage = `url('${product.frontImage}')`;
+                    thumbnails[0].style.backgroundSize = 'contain';
+                    thumbnails[0].style.backgroundPosition = 'center';
+                    thumbnails[0].style.backgroundRepeat = 'no-repeat';
+                    thumbnails[0].classList.add('product-thumb');
+                } else {
+                    thumbnails[0].style.backgroundImage = 'none';
+                    thumbnails[0].classList.remove('product-thumb');
+                }
+                
+                // Back thumbnail
+                if (product.backImage) {
+                    thumbnails[1].style.backgroundImage = `url('${product.backImage}')`;
+                    thumbnails[1].style.backgroundSize = 'contain';
+                    thumbnails[1].style.backgroundPosition = 'center';
+                    thumbnails[1].style.backgroundRepeat = 'no-repeat';
+                    thumbnails[1].classList.add('product-thumb');
+                } else {
+                    thumbnails[1].style.backgroundImage = 'none';
+                    thumbnails[1].classList.remove('product-thumb');
+                }
+                
+                // Reset active state
+                thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                thumbnails[0].classList.add('active');
+            }
+        }
+
+        // Update size options
+        function updateSizeOptions(product) {
+            const sizeContainer = document.getElementById('sizeOptions');
+            sizeContainer.innerHTML = '';
+            
+            product.sizes.forEach((size, index) => {
+                const sizeEl = document.createElement('div');
+                sizeEl.className = `size-option ${index === 0 ? 'selected' : ''}`;
+                sizeEl.dataset.size = size;
+                sizeEl.textContent = size.toUpperCase();
+                sizeContainer.appendChild(sizeEl);
+            });
+        }
+
+        // Update color options
+        function updateColorOptions(product) {
+            const colorContainer = document.getElementById('colorOptions');
+            colorContainer.innerHTML = '';
+            
+            product.colors.forEach((color, index) => {
+                const colorEl = document.createElement('div');
+                colorEl.className = `color-option ${colorClasses[color]} ${index === 0 ? 'selected' : ''}`;
+                colorEl.dataset.color = color;
+                colorContainer.appendChild(colorEl);
+            });
+        }
+
+        // Setup product selector
+        function setupProductSelector() {
+            const selector = document.getElementById('productSelector');
+            
+            // Clear existing options first
+            selector.innerHTML = '';
+            
+            // Populate options
+            allProducts.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.textContent = `${product.name} - ${product.price}`;
+                selector.appendChild(option);
+            });
+            
+            // Set initial value
+            selector.value = currentProduct.id;
+            
+            // Handle change
+            selector.addEventListener('change', function() {
+                const productId = parseInt(this.value);
+                const newProduct = allProducts.find(p => p.id === productId);
+                if (newProduct) {
+                    currentProduct = newProduct;
+                    console.log('Product switched to:', currentProduct.name);
+                    
+                    // Update the URL without refreshing the page
+                    const newUrl = `${window.location.pathname}?id=${productId}`;
+                    window.history.pushState({ productId: productId }, '', newUrl);
+                    
+                    updateProductDisplay(currentProduct);
+                    setupDynamicEventListeners();
+                    
+                    showNotification(`✨ Switched to ${currentProduct.name}! 💖`);
+                }
+            });
+        }
+
+        // Setup dynamic event listeners (for size/color selection)
+        function setupDynamicEventListeners() {
+            // Size selection
+            const sizeOptions = document.querySelectorAll('.size-option');
+            sizeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    if (this.classList.contains('out-of-stock')) return;
+                    
+                    sizeOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            // Color selection
+            const colorOptions = document.querySelectorAll('.color-option');
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    colorOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        }
+
+        // Shopping Cart - Using in-memory storage
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            if (badge) {
+                badge.textContent = cartCount;
+                badge.style.display = cartCount > 0 ? 'flex' : 'none';
+            }
+        }
+
+        function addToCart() {
+            const selectedSize = document.querySelector('.size-option.selected')?.dataset.size;
+            const selectedColor = document.querySelector('.color-option.selected')?.dataset.color;
+            const quantity = parseInt(document.getElementById('qtyInput').value);
+            
+            if (!selectedSize) {
+                showNotification('🎀 Please select a size! 💕');
+                return;
+            }
+
+            const product = {
+                id: currentProduct.id + '-' + Date.now(),
+                name: currentProduct.name,
+                price: currentProduct.price,
+                size: selectedSize,
+                color: selectedColor,
+                quantity: quantity,
+                image: '🎀'
+            };
+
+            cart.push(product);
+            cartCount++;
+            updateCartBadge();
+            
+            showNotification(`💖 Added ${quantity}x ${currentProduct.name} (${selectedSize}, ${selectedColor}) to cart! ✨`);
+            createSparkleExplosion();
+        }
+
+        // Image Gallery
+        function setupImageGallery() {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const mainImage = document.getElementById('mainImage');
+
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const imageType = this.dataset.image;
+                    if (imageType === 'front' && currentProduct.frontImage) {
+                        mainImage.style.backgroundImage = `url('${currentProduct.frontImage}')`;
+                    } else if (imageType === 'back' && currentProduct.backImage) {
+                        mainImage.style.backgroundImage = `url('${currentProduct.backImage}')`;
+                    }
+                });
+            });
+        }
+
+        // Quantity Controls
+        function setupQuantityControls() {
+            const qtyMinus = document.getElementById('qtyMinus');
+            const qtyPlus = document.getElementById('qtyPlus');
+            const qtyInput = document.getElementById('qtyInput');
+
+            qtyMinus.addEventListener('click', function() {
+                const current = parseInt(qtyInput.value);
+                if (current > 1) {
+                    qtyInput.value = current - 1;
+                }
+            });
+
+            qtyPlus.addEventListener('click', function() {
+                const current = parseInt(qtyInput.value);
+                if (current < 10) {
+                    qtyInput.value = current + 1;
+                }
+            });
+        }
+
+        // Product Tabs
+        function setupTabs() {
+            const tabHeaders = document.querySelectorAll('.tab-header');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    
+                    tabHeaders.forEach(h => h.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        }
+
+        // Wishlist
+        function setupWishlist() {
+            const wishlistBtn = document.getElementById('wishlistBtn');
+            let isWishlisted = false;
+
+            wishlistBtn.addEventListener('click', function() {
+                isWishlisted = !isWishlisted;
+                this.textContent = isWishlisted ? '♥' : '♡';
+                this.classList.toggle('active');
+                
+                if (isWishlisted) {
+                    showNotification('💕 Added to wishlist! So kawaii! ✨');
+                } else {
+                    showNotification('💔 Removed from wishlist');
+                }
+            });
+        }
+
+        // Notifications
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.innerHTML = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(45deg, #ff1493, #ff69b4);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 25px;
+                font-weight: 600;
+                box-shadow: 0 0 30px rgba(255, 20, 147, 0.8);
+                z-index: 10000;
+                animation: slideInRight 0.5s ease-out;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                max-width: 300px;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.5s ease-in forwards';
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+
+        // Sparkle Effects
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.innerHTML = '✨';
+            sparkle.style.position = 'fixed';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.fontSize = '20px';
+            sparkle.style.color = '#ff69b4';
+            sparkle.style.zIndex = '9999';
+            sparkle.style.animation = 'sparkleFloat 2s ease-out forwards';
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+
+        function createSparkleExplosion() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createSparkle(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight
+                    );
+                }, i * 100);
+            }
+        }
+
+        // CSS Animations
+        const styles = document.createElement('style');
+        styles.textContent = `
+            @keyframes sparkleFloat {
+                0% {
+                    transform: translateY(0) scale(1) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100px) scale(0) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes slideInRight {
+                0% {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                100% {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideOutRight {
+                0% {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(styles);
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎀 Initializing page with', allProducts.length, 'products');
+            
+            // Check if there's a product ID in the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            
+            if (productId) {
+                const selectedProduct = allProducts.find(p => p.id === parseInt(productId));
+                if (selectedProduct) {
+                    currentProduct = selectedProduct;
+                    console.log('Loading product from URL:', currentProduct.name);
+                } else {
+                    console.warn('Product ID not found, using default product');
+                }
+            }
+            
+            // Handle browser back/forward buttons
+            window.addEventListener('popstate', function(event) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const newProductId = urlParams.get('id');
+                
+                if (newProductId) {
+                    const newProduct = allProducts.find(p => p.id === parseInt(newProductId));
+                    if (newProduct && newProduct.id !== currentProduct.id) {
+                        currentProduct = newProduct;
+                        console.log('Browser navigation - Loading product:', currentProduct.name);
+                        updateProductDisplay(currentProduct);
+                        setupDynamicEventListeners();
+                        
+                        // Update dropdown to match
+                        document.getElementById('productSelector').value = currentProduct.id;
+                    }
+                }
+            });
+            
+            createFluffyClouds();
+            setupProductSelector();
+            updateProductDisplay(currentProduct);
+            setupImageGallery();
+            setupDynamicEventListeners();
+            setupQuantityControls();
+            setupTabs();
+            setupWishlist();
+            updateCartBadge();
+
+            // Add to cart button
+            document.getElementById('addToCartBtn').addEventListener('click', addToCart);
+
+            // Search functionality
+            document.getElementById('searchBtn').addEventListener('click', function() {
+                const query = document.getElementById('searchBox').value.trim();
+                if (query) {
+                    showNotification(`🔍 Searching for "${query}"... Coming soon! 💕`);
+                }
+            });
+
+            // Cart button
+            document.getElementById('cartBtn').addEventListener('click', function() {
+                if (cartCount === 0) {
+                    showNotification('🛒 Your cart is empty! Add some kawaii items! 💖');
+                } else {
+                    showNotification(`🛒 You have ${cartCount} items in your cart! 💕`);
+                }
+            });
+
+            // Back to shop button
+            document.querySelector('.back-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.history.back();
+            });
+
+            console.log('🎀 Product page loaded with all 14 kawaii products! 💖');
+        });
+    </script>
+</body>
+</html>

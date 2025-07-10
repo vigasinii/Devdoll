@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevDoll Collection - Kawaii Developer Merch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8e1e8 0%, #f0c4d1 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* GIANT WHITE FLUFFY CLOUDS */
+        .cloud-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .cloud-column {
+            position: absolute;
+            bottom: -400px;
+            font-size: 300px;
+            color: rgba(255, 255, 255, 0.7);
+            animation: cloud-rise linear infinite;
+            text-shadow: 0 0 50px rgba(255, 255, 255, 0.9);
+            white-space: pre-line;
+            line-height: 0.8;
+        }
+
+        @keyframes cloud-rise {
+            0% { 
+                bottom: -400px;
+                opacity: 0;
+            }
+            15% {
+                opacity: 1;
+            }
+            85% {
+                opacity: 1;
+            }
+            100% { 
+                bottom: 120vh;
+                opacity: 0;
+            }
+        }
+
+        .top-banner {
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.4), rgba(255, 105, 180, 0.3));
+            text-align: center;
+            padding: 12px;
+            font-size: 13px;
+            color: #ff1493;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 182, 193, 0.1));
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff1493;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 10px rgba(255, 105, 180, 0.6);
+            order: 1;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            color: #ff69b4;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 1);
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+            order: 2;
+            margin: 0 20px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 45px 12px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 25px;
+            font-size: 14px;
+            color: #8b4d6b;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            order: 3;
+        }
+
+        .cart-icon {
+            position: relative;
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.8), rgba(255, 105, 180, 0.6));
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff6b35;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #ff1493;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            order: 4;
+        }
+
+        .nav {
+            display: flex;
+            gap: 25px;
+            order: 5;
+        }
+
+        .nav a {
+            color: #ff1493;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.3), rgba(255, 105, 180, 0.2));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 20px;
+        }
+
+        .nav a:hover {
+            opacity: 1;
+            color: #ff69b4;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .nav a:hover::before {
+            opacity: 1;
+        }
+
+        .nav a.active {
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.4), rgba(255, 105, 180, 0.3));
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        /* BREADCRUMBS */
+        .breadcrumbs {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb-list {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(139, 77, 107, 0.8);
+            font-size: 14px;
+        }
+
+        .breadcrumb-list a {
+            color: #ff1493;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb-list a:hover {
+            color: #ff69b4;
+        }
+
+        /* CATEGORY HEADER */
+        .category-header {
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-title {
+            font-size: 3rem;
+            color: #ff1493;
+            margin-bottom: 15px;
+            font-weight: 600;
+            background: linear-gradient(45deg, #ff1493, #ff69b4, #ffc0cb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .category-subtitle {
+            color: rgba(139, 77, 107, 0.8);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .category-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .stat-item {
+            color: #ff1493;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* FILTERS & SORT */
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .filters-toggle {
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.1), rgba(255, 105, 180, 0.05));
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            color: #ff1493;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filters-toggle:hover {
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.2), rgba(255, 105, 180, 0.1));
+            border-color: #ff1493;
+        }
+
+        .sort-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sort-label {
+            color: #ff1493;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .sort-select {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 20px;
+            padding: 8px 15px;
+            color: #8b4d6b;
+            font-weight: 500;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sort-select:focus {
+            border-color: #ff1493;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .view-toggle {
+            display: flex;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+        }
+
+        .view-btn {
+            background: none;
+            border: none;
+            padding: 8px 12px;
+            color: rgba(255, 20, 147, 0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .view-btn.active {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        /* FILTERS SIDEBAR */
+        .filters-sidebar {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .filters-sidebar.hidden {
+            display: none;
+        }
+
+        .filter-section {
+            margin-bottom: 30px;
+        }
+
+        .filter-title {
+            color: #ff1493;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-option:hover {
+            background: rgba(255, 20, 147, 0.05);
+        }
+
+        .filter-checkbox {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ff1493;
+            border-radius: 4px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .filter-option.checked .filter-checkbox::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ff1493;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .filter-label {
+            color: rgba(139, 77, 107, 0.9);
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .filter-count {
+            color: rgba(139, 77, 107, 0.6);
+            font-size: 12px;
+        }
+
+        /* PRICE RANGE */
+        .price-range {
+            margin-bottom: 20px;
+        }
+
+        .price-inputs {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .price-input {
+            flex: 1;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 10px;
+            font-size: 14px;
+            color: #8b4d6b;
+            outline: none;
+            text-align: center;
+        }
+
+        .price-input:focus {
+            border-color: #ff1493;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        /* CLEAR FILTERS */
+        .clear-filters {
+            background: linear-gradient(45deg, rgba(255, 107, 53, 0.1), rgba(255, 107, 53, 0.05));
+            border: 2px solid rgba(255, 107, 53, 0.3);
+            color: #ff6b35;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .clear-filters:hover {
+            background: linear-gradient(45deg, rgba(255, 107, 53, 0.2), rgba(255, 107, 53, 0.1));
+            border-color: #ff6b35;
+        }
+
+        /* PRODUCTS GRID */
+        .products-container {
+            min-height: 600px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .products-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        .product-card {
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.4), rgba(255, 105, 180, 0.3));
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 20, 147, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .product-card:hover::before {
+            left: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 20, 147, 0.3);
+            border-color: #ff1493;
+        }
+
+        .products-grid.list-view .product-card {
+            flex-direction: row;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493, #ffc0cb);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .product-image.placeholder {
+            background: linear-gradient(135deg, #ff69b4, #ff1493, #ffc0cb);
+        }
+
+        .products-grid.list-view .product-image {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            animation: sparkleRotate 6s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes sparkleRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            color: #ff1493;
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .product-category {
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.1), rgba(255, 105, 180, 0.05));
+            color: #ff1493;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 20, 147, 0.2);
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 14px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+
+        .rating-count {
+            color: rgba(139, 77, 107, 0.7);
+            font-size: 12px;
+        }
+
+        .product-description {
+            color: rgba(139, 77, 107, 0.8);
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .products-grid.list-view .product-description {
+            margin-bottom: 20px;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .current-price {
+            color: #ff1493;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .original-price {
+            color: rgba(139, 77, 107, 0.6);
+            text-decoration: line-through;
+            font-size: 14px;
+        }
+
+        .discount-badge {
+            background: linear-gradient(45deg, #ff6b35, #ff4500);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .add-to-cart-btn {
+            flex: 1;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+        }
+
+        .add-to-cart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 20, 147, 0.8);
+        }
+
+        .wishlist-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 50%;
+            color: #ff1493;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .wishlist-btn:hover {
+            border-color: #ff1493;
+            background: rgba(255, 20, 147, 0.1);
+            transform: scale(1.1);
+        }
+
+        .wishlist-btn.active {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border-color: #ff1493;
+        }
+
+        .view-product-btn {
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.1), rgba(255, 105, 180, 0.05));
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            color: #ff1493;
+            padding: 8px 16px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 12px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .view-product-btn:hover {
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.2), rgba(255, 105, 180, 0.1));
+            border-color: #ff1493;
+            transform: scale(1.05);
+        }
+
+        /* PAGINATION */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 50%;
+            color: #ff1493;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .page-btn:hover {
+            border-color: #ff1493;
+            background: rgba(255, 20, 147, 0.1);
+            transform: scale(1.1);
+        }
+
+        .page-btn.active {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border-color: #ff1493;
+        }
+
+        /* LOADING STATE */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #ff1493;
+        }
+
+        .loading-spinner {
+            font-size: 48px;
+            animation: spin 2s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* NO RESULTS */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(139, 77, 107, 0.8);
+            grid-column: 1 / -1;
+        }
+
+        .no-results-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.6;
+        }
+
+        .no-results h3 {
+            color: #ff1493;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .no-results p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* CSS Animations */
+        @keyframes sparkleFloat {
+            0% {
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideInRight {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            0% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* MOBILE STYLES */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px;
+                flex-wrap: wrap;
+            }
+
+            .search-container {
+                order: 3;
+                width: 100%;
+                margin: 10px 0;
+                max-width: none;
+            }
+
+            .nav {
+                display: none;
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, rgba(255, 182, 193, 0.95), rgba(255, 105, 180, 0.9));
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+                border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+                z-index: 999;
+            }
+
+            .nav.open {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .category-title {
+                font-size: 2rem;
+            }
+
+            .category-stats {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .controls-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .filters-sidebar {
+                position: static;
+                order: 2;
+            }
+
+            .products-container {
+                order: 1;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .products-grid.list-view {
+                grid-template-columns: 1fr;
+            }
+
+            .products-grid.list-view .product-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .products-grid.list-view .product-image {
+                width: 100%;
+                height: 150px;
+                margin-bottom: 15px;
+            }
+
+            .product-image {
+                height: 150px;
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Giant White Fluffy Clouds -->
+    <div class="cloud-bg" id="cloudBg"></div>
+
+    <div class="top-banner">
+        🌸 You bring the vibe, we'll bring the fluff — shipping's on us over $12!
+    </div>
+
+    <header class="header">
+        <div class="logo">🎀 DevDoll</div>
+        
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search cute developer merch..." id="searchBox">
+            <button class="search-btn" id="searchBtn">🔍</button>
+        </div>
+
+        <div class="header-actions">
+            <button class="cart-icon" id="cartBtn">
+                🛒
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+
+        <nav class="nav" id="navMenu">
+            <a href="#dollhouse">dollhouse</a>
+            <a href="#shoppe">shoppe</a>
+            <a href="#tales">tales</a>
+            <a href="#buzz">buzz</a>
+            <a href="#collection" class="active">collection ✨</a>
+        </nav>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <div class="breadcrumb-list">
+            <a href="#">Home</a> 
+            <span>→</span> 
+            <a href="#">Shop</a> 
+            <span>→</span> 
+            <span>DevDoll Collection</span>
+        </div>
+    </div>
+
+    <!-- Category Header -->
+    <div class="category-header">
+        <h1 class="category-title">DevDoll Collection</h1>
+        <p class="category-subtitle">
+            Cute and comfy developer merch perfect for coding sessions! Our kawaii collection features 
+            crop tees, cozy hoodies, aesthetic phone cases, kawaii mugs, and amazing combos for female developers 
+            who want to look absolutely stunning while debugging their code. 💖
+        </p>
+        <div class="category-stats">
+            <div class="stat-item">
+                <span>📦</span>
+                <span id="productCount">14 Products</span>
+            </div>
+            <div class="stat-item">
+                <span>⭐</span>
+                <span>4.8 Average Rating</span>
+            </div>
+            <div class="stat-item">
+                <span>🚚</span>
+                <span>Free Shipping Available</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+        <button class="filters-toggle" id="filtersToggle">
+            🔍 Filters
+        </button>
+        
+        <div class="sort-container">
+            <label class="sort-label">Sort by:</label>
+            <select class="sort-select" id="sortSelect">
+                <option value="featured">✨ Featured</option>
+                <option value="price-low">💰 Price: Low to High</option>
+                <option value="price-high">💎 Price: High to Low</option>
+                <option value="newest">🆕 Newest First</option>
+                <option value="rating">⭐ Best Rated</option>
+                <option value="popular">🔥 Most Popular</option>
+            </select>
+        </div>
+
+        <div class="view-toggle">
+            <button class="view-btn active" data-view="grid">⊞</button>
+            <button class="view-btn" data-view="list">☰</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Filters Sidebar -->
+        <div class="filters-sidebar" id="filtersSidebar">
+            <!-- Product Type Filter -->
+            <div class="filter-section">
+                <div class="filter-title">🛍️ Product Type</div>
+                <div class="filter-options">
+                    <div class="filter-option" data-filter="type" data-value="crop-tee">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Crop Tees</div>
+                        <div class="filter-count">(5)</div>
+                    </div>
+                    <div class="filter-option" data-filter="type" data-value="hoodie">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Hoodies</div>
+                        <div class="filter-count">(3)</div>
+                    </div>
+                    <div class="filter-option" data-filter="type" data-value="phone-case">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Phone Cases</div>
+                        <div class="filter-count">(3)</div>
+                    </div>
+                    <div class="filter-option" data-filter="type" data-value="mug">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Kawaii Mugs</div>
+                        <div class="filter-count">(3)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="filter-section">
+                <div class="filter-title">📂 Category</div>
+                <div class="filter-options">
+                    <div class="filter-option" data-filter="category" data-value="Tees">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Tees</div>
+                        <div class="filter-count">(5)</div>
+                    </div>
+                    <div class="filter-option" data-filter="category" data-value="Hoodies">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Hoodies</div>
+                        <div class="filter-count">(3)</div>
+                    </div>
+                    <div class="filter-option" data-filter="category" data-value="Phone Cases">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Phone Cases</div>
+                        <div class="filter-count">(3)</div>
+                    </div>
+                    <div class="filter-option" data-filter="category" data-value="Mugs">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Mugs</div>
+                        <div class="filter-count">(3)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Size Filter -->
+            <div class="filter-section">
+                <div class="filter-title">👕 Size/Model</div>
+                <div class="filter-options">
+                    <div class="filter-option" data-filter="size" data-value="xs">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">XS</div>
+                        <div class="filter-count">(6)</div>
+                    </div>
+                    <div class="filter-option" data-filter="size" data-value="s">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">S</div>
+                        <div class="filter-count">(9)</div>
+                    </div>
+                    <div class="filter-option" data-filter="size" data-value="m">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">M</div>
+                        <div class="filter-count">(9)</div>
+                    </div>
+                    <div class="filter-option" data-filter="size" data-value="l">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">L</div>
+                        <div class="filter-count">(8)</div>
+                    </div>
+                    <div class="filter-option" data-filter="size" data-value="xl">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">XL</div>
+                        <div class="filter-count">(4)</div>
+                    </div>
+                    <div class="filter-option" data-filter="size" data-value="iPhone">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">iPhone</div>
+                        <div class="filter-count">(3)</div>
+                    </div>
+                    <div class="filter-option" data-filter="size" data-value="11oz">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">11oz Mug</div>
+                        <div class="filter-count">(3)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color Filter -->
+            <div class="filter-section">
+                <div class="filter-title">🎨 Color</div>
+                <div class="filter-options">
+                    <div class="filter-option" data-filter="color" data-value="pink">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Pink</div>
+                        <div class="filter-count">(7)</div>
+                    </div>
+                    <div class="filter-option" data-filter="color" data-value="purple">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Purple</div>
+                        <div class="filter-count">(2)</div>
+                    </div>
+                    <div class="filter-option" data-filter="color" data-value="blue">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Blue</div>
+                        <div class="filter-count">(2)</div>
+                    </div>
+                    <div class="filter-option" data-filter="color" data-value="white">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">White</div>
+                        <div class="filter-count">(2)</div>
+                    </div>
+                    <div class="filter-option" data-filter="color" data-value="beige">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Beige</div>
+                        <div class="filter-count">(1)</div>
+                    </div>
+                    <div class="filter-option" data-filter="color" data-value="yellow">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Yellow</div>
+                        <div class="filter-count">(1)</div>
+                    </div>
+                    <div class="filter-option" data-filter="color" data-value="teal">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Teal</div>
+                        <div class="filter-count">(2)</div>
+                    </div>
+                    <div class="filter-option" data-filter="color" data-value="mint">
+                        <div class="filter-checkbox"></div>
+                        <div class="filter-label">Mint</div>
+                        <div class="filter-count">(1)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Filter -->
+            <div class="filter-section">
+                <div class="filter-title">💰 Price Range</div>
+                <div class="price-range">
+                    <div class="price-inputs">
+                        <input type="number" class="price-input" placeholder="Min" id="minPrice">
+                        <span style="color: #ff1493;">-</span>
+                        <input type="number" class="price-input" placeholder="Max" id="maxPrice">
+                    </div>
+                </div>
+            </div>
+
+            <button class="clear-filters" id="clearFilters">Clear All Filters</button>
+        </div>
+
+        <!-- Products Container -->
+        <div class="products-container">
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be populated by JavaScript -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <button class="page-btn" id="prevPage" disabled>←</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn" id="nextPage">→</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DevDoll Collection - 14 products matching the actual images provided
+        const allProducts = [
+            // CROP TEES/BANDEAUS (5 products from the clothing images)
+            { id: 1, name: 'Kawaii Girl Developer Tube Top', price: 12, originalPrice: 16, rating: 5, reviews: 42, image: 'images/1.png', sizes: ['xs', 's', 'm', 'l'], colors: ['pink', 'white'], category: 'Tees', type: 'crop-tee', description: 'Pink bandeau top featuring cute kawaii girl developer at her laptop with coding vibes' },
+            
+            { id: 2, name: 'Multi-Monitor Dev Girl Bandeau', price: 13, originalPrice: 17, rating: 5, reviews: 67, image: 'images/3.png', sizes: ['s', 'm', 'l', 'xl'], colors: ['purple', 'pink'], category: 'Tees', type: 'crop-tee', description: 'Purple bandeau with kawaii developer girl surrounded by multiple colorful heart monitors' },
+            
+            { id: 3, name: 'Magical Code Fairy Bandeau', price: 10, originalPrice: 13, rating: 4.8, reviews: 38, image: 'images/5.png', sizes: ['s', 'm', 'l', 'xl'], colors: ['white'], category: 'Tees', type: 'crop-tee', description: 'White bandeau featuring magical fairy developer with sparkles and coding magic' },
+            
+            { id: 7, name: 'Pink Hoodie Cat Girl Tee', price: 18, originalPrice: 24, rating: 4.6, reviews: 38, image: 'images/13.png', sizes: ['xs', 's', 'm', 'l', 'xl'], colors: ['pink'], category: 'Tees', type: 'crop-tee', description: 'Pink crop tee with adorable cat-eared girl developer surrounded by colorful code windows' },
+            
+            { id: 8, name: 'Cloud Developer Girl Tee', price: 16, originalPrice: 21, rating: 4.7, reviews: 35, image: 'images/15.png', sizes: ['xs', 's', 'm', 'l'], colors: ['yellow'], category: 'Tees', type: 'crop-tee', description: 'Soft yellow crop tee with dreamy developer girl floating on clouds with her laptop' },
+
+            // HOODIES (3 products from hoodie images)
+            { id: 4, name: 'Pink Hoodie Coder Sweatshirt', price: 22, originalPrice: 29, rating: 4.8, reviews: 45, image: 'images/7.png', sizes: ['xs', 's', 'm', 'l', 'xl'], colors: ['pink'], category: 'Hoodies', type: 'hoodie', description: 'Pink sweatshirt with cute developer girl in glasses and modern aesthetic design' },
+            
+            { id: 5, name: 'Unicorn Dreams Coder Sweatshirt', price: 24, originalPrice: 32, rating: 5, reviews: 72, image: 'images/9.png', sizes: ['xs', 's', 'm', 'l'], colors: ['blue'], category: 'Hoodies', type: 'hoodie', description: 'Light blue sweatshirt with unicorn-haired developer girl and dreamy coding vibes' },
+            
+            { id: 6, name: 'Coffee Queen Developer Sweatshirt', price: 23, originalPrice: 30, rating: 4.9, reviews: 51, image: 'images/11.png', sizes: ['s', 'm', 'l'], colors: ['beige'], category: 'Hoodies', type: 'hoodie', description: 'Beige sweatshirt featuring blonde developer girl with coffee cup - perfect for caffeine lovers' },
+
+            // PHONE CASES (3 products from phone case images)
+            { id: 9, name: 'Pixel Perfect Heart Phone Case', price: 15, originalPrice: 20, rating: 4.9, reviews: 124, image: 'images/Untitled design (16).png', sizes: ['iPhone'], colors: ['purple'], category: 'Phone Cases', type: 'phone-case', description: 'Purple phone case with kawaii girl holding glowing pink pixel heart with "PIXEL PERFECT" text' },
+            
+            { id: 10, name: 'Digital Divine Goddess Case', price: 16, originalPrice: 21, rating: 4.8, reviews: 98, image: 'images/Untitled design (15).png', sizes: ['iPhone'], colors: ['teal'], category: 'Phone Cases', type: 'phone-case', description: 'Teal phone case featuring beautiful red-haired digital goddess with flowing binary code design' },
+            
+            { id: 11, name: 'Code Magic Phone Case', price: 16, originalPrice: 21, rating: 4.8, reviews: 98, image: 'images/Untitled design (17).png', sizes: ['iPhone'], colors: ['blue'], category: 'Phone Cases', type: 'phone-case', description: 'Blue phone case featuring mystical code magic with ethereal developer vibes' },
+
+            // MUGS (3 products from mug images)  
+            { id: 12, name: 'Just Me and Coffee Pink Mug', price: 14, originalPrice: 19, rating: 4.8, reviews: 156, image: 'images/just me and coffee.png', sizes: ['11oz'], colors: ['pink'], category: 'Mugs', type: 'mug', description: 'Adorable pink mug with "just me and coffee" text and kawaii girl surrounded by colorful coffee cups' },
+            
+            { id: 13, name: 'Sakura Developer Girl Mug', price: 15, originalPrice: 20, rating: 4.9, reviews: 134, image: 'images/just me and coffee (1).png', sizes: ['11oz'], colors: ['pink'], category: 'Mugs', type: 'mug', description: 'Pink mug featuring anime-style developer girl with cherry blossom hair accessories and dual monitor setup' },
+            
+            { id: 14, name: 'Cozy Hoodie Coder Blue Mug', price: 13, originalPrice: 17, rating: 4.7, reviews: 98, image: 'images/Untitled design (14).png', sizes: ['11oz'], colors: ['mint'], category: 'Mugs', type: 'mug', description: 'Mint blue mug with cozy cat-eared hoodie girl, teddy bear, and multiple coding screens - ultimate comfort vibes' }
+        ];
+
+        let filteredProducts = [...allProducts];
+        let currentPage = 1;
+        let itemsPerPage = 12;
+        let currentView = 'grid';
+        let activeFilters = {
+            type: [],
+            category: [],
+            size: [],
+            color: [],
+            priceMin: null,
+            priceMax: null
+        };
+
+        // Navigate to product page
+        function viewProduct(productId, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            const product = allProducts.find(p => p.id === productId);
+            if (product) {
+                // Create the correct file URL for your local setup
+                const productPageURL = `file:///C:/Users/Vigasini/devdoll/dev_doll_product%20(1).html?id=${productId}`;
+                
+                // Navigate to product page
+                window.location.href = productPageURL;
+                
+                showNotification(`✨ Opening ${product.name} details page! 💖`);
+            }
+        }
+
+        // Cloud Background
+        function createFluffyClouds() {
+            const cloudBg = document.getElementById('cloudBg');
+            if (!cloudBg) return;
+            
+            const cloudSymbols = ['☁️'];
+            
+            for (let i = 0; i < 4; i++) {
+                setTimeout(() => {
+                    const column = document.createElement('div');
+                    column.className = 'cloud-column';
+                    column.style.left = Math.random() * 100 + '%';
+                    column.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                    column.style.animationDelay = Math.random() * 8 + 's';
+                    
+                    column.textContent = cloudSymbols[0];
+                    cloudBg.appendChild(column);
+                    
+                    setTimeout(() => {
+                        if (column.parentNode) {
+                            column.remove();
+                        }
+                    }, 35000);
+                }, i * 1000);
+            }
+            
+            setInterval(() => {
+                if (cloudBg.children.length < 3) {
+                    const column = document.createElement('div');
+                    column.className = 'cloud-column';
+                    column.style.left = Math.random() * 100 + '%';
+                    column.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                    
+                    column.textContent = cloudSymbols[0];
+                    cloudBg.appendChild(column);
+                    
+                    setTimeout(() => {
+                        if (column.parentNode) {
+                            column.remove();
+                        }
+                    }, 35000);
+                }
+            }, 8000);
+        }
+
+        // Get category display name
+        function getCategoryDisplayName(category) {
+            return category;
+        }
+
+        // Create product image with fallback
+        function createProductImage(product) {
+            return `
+                <div class="product-image" style="background-image: url('${product.image}'); background-size: contain; background-position: center; background-repeat: no-repeat;">
+                </div>
+            `;
+        }
+
+        // Get emoji based on product type
+        function getEmojiForType(type) {
+            const emojis = {
+                'crop-tee': '👚',
+                'hoodie': '🧥',
+                'phone-case': '📱',
+                'mug': '☕',
+                'combo': '🎁'
+            };
+            return emojis[type] || '✨';
+        }
+
+        // Render products
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const productsToShow = filteredProducts.slice(startIndex, endIndex);
+
+            if (productsToShow.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">😢</div>
+                        <h3>No products found</h3>
+                        <p>Try adjusting your filters or search for something else.<br>We have lots of kawaii items waiting for you! 💖</p>
+                        <button class="clear-filters" onclick="clearAllFilters()">Clear All Filters</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = productsToShow.map(product => {
+                const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+                return `
+                    <div class="product-card" data-id="${product.id}" onclick="viewProduct(${product.id}, event)">
+                        ${createProductImage(product)}
+                        <div class="product-info">
+                            <div class="product-category">${getCategoryDisplayName(product.category)}</div>
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-rating">
+                                <div class="stars">${'★'.repeat(Math.floor(product.rating))}${product.rating % 1 ? '☆' : ''}</div>
+                                <div class="rating-count">(${product.reviews})</div>
+                            </div>
+                            <div class="product-description">${product.description}</div>
+                            <div class="product-price">
+                                <span class="current-price">${product.price}</span>
+                                <span class="original-price">${product.originalPrice}</span>
+                                <span class="discount-badge">${discount}% OFF</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="view-product-btn" onclick="viewProduct(${product.id}, event)">View Details</button>
+                                <button class="add-to-cart-btn" onclick="addToCart(${product.id}, event)">Add to Cart</button>
+                                <button class="wishlist-btn" onclick="toggleWishlist(${product.id}, event)">♡</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            updateProductCount();
+            updatePagination();
+        }
+
+        // Update product count
+        function updateProductCount() {
+            document.getElementById('productCount').textContent = `${filteredProducts.length} Products`;
+        }
+
+        // Filter products
+        function filterProducts() {
+            filteredProducts = allProducts.filter(product => {
+                // Product type filter
+                if (activeFilters.type.length > 0) {
+                    if (!activeFilters.type.includes(product.type)) {
+                        return false;
+                    }
+                }
+
+                // Category filter
+                if (activeFilters.category.length > 0) {
+                    if (!activeFilters.category.includes(product.category)) {
+                        return false;
+                    }
+                }
+
+                // Size filter
+                if (activeFilters.size.length > 0) {
+                    if (!activeFilters.size.some(size => product.sizes.includes(size))) {
+                        return false;
+                    }
+                }
+
+                // Color filter
+                if (activeFilters.color.length > 0) {
+                    if (!activeFilters.color.some(color => product.colors.includes(color))) {
+                        return false;
+                    }
+                }
+
+                // Price filter
+                if (activeFilters.priceMin !== null && product.price < activeFilters.priceMin) {
+                    return false;
+                }
+                if (activeFilters.priceMax !== null && product.price > activeFilters.priceMax) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            currentPage = 1;
+            renderProducts();
+        }
+
+        // Sort products
+        function sortProducts(sortBy) {
+            switch (sortBy) {
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    filteredProducts.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'newest':
+                    filteredProducts.sort((a, b) => b.id - a.id);
+                    break;
+                case 'popular':
+                    filteredProducts.sort((a, b) => b.reviews - a.reviews);
+                    break;
+                default: // featured
+                    filteredProducts.sort((a, b) => a.id - b.id);
+            }
+
+            renderProducts();
+            showNotification(`Sorted by ${document.getElementById('sortSelect').selectedOptions[0].text} ✨`);
+        }
+
+        // Setup filters
+        function setupFilters() {
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.filter-option')) {
+                    const option = e.target.closest('.filter-option');
+                    const filterType = option.dataset.filter;
+                    const filterValue = option.dataset.value;
+
+                    option.classList.toggle('checked');
+
+                    if (option.classList.contains('checked')) {
+                        activeFilters[filterType].push(filterValue);
+                    } else {
+                        activeFilters[filterType] = activeFilters[filterType].filter(v => v !== filterValue);
+                    }
+
+                    filterProducts();
+                    showNotification(`Filter applied: ${getCategoryDisplayName(filterValue) || filterValue} 💖`);
+                }
+            });
+
+            // Price filter
+            document.getElementById('minPrice').addEventListener('change', function() {
+                activeFilters.priceMin = this.value ? parseInt(this.value) : null;
+                filterProducts();
+            });
+
+            document.getElementById('maxPrice').addEventListener('change', function() {
+                activeFilters.priceMax = this.value ? parseInt(this.value) : null;
+                filterProducts();
+            });
+        }
+
+        // Clear all filters
+        function clearAllFilters() {
+            activeFilters = {
+                type: [],
+                category: [],
+                size: [],
+                color: [],
+                priceMin: null,
+                priceMax: null
+            };
+
+            document.querySelectorAll('.filter-option').forEach(option => {
+                option.classList.remove('checked');
+            });
+
+            document.getElementById('minPrice').value = '';
+            document.getElementById('maxPrice').value = '';
+
+            filteredProducts = [...allProducts];
+            currentPage = 1;
+            renderProducts();
+            showNotification('All filters cleared! 🧹✨');
+        }
+
+        // Pagination
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+            const pagination = document.getElementById('pagination');
+            
+            let paginationHTML = '';
+            
+            // Previous button
+            paginationHTML += `<button class="page-btn" id="prevPage" ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(${currentPage - 1})">←</button>`;
+            
+            // Page numbers
+            for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+                paginationHTML += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+            }
+            
+            // Next button
+            paginationHTML += `<button class="page-btn" id="nextPage" ${currentPage === totalPages ? 'disabled' : ''} onclick="changePage(${currentPage + 1})">→</button>`;
+            
+            pagination.innerHTML = paginationHTML;
+        }
+
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                renderProducts();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // View toggle
+        function setupViewToggle() {
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('view-btn')) {
+                    const view = e.target.dataset.view;
+                    
+                    document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    const grid = document.getElementById('productsGrid');
+                    if (view === 'list') {
+                        grid.classList.add('list-view');
+                    } else {
+                        grid.classList.remove('list-view');
+                    }
+                    
+                    currentView = view;
+                    showNotification(`Switched to ${view} view 👀`);
+                }
+            });
+        }
+
+        // Mobile menu
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (mobileMenuBtn && navMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navMenu.classList.toggle('open');
+                    this.textContent = navMenu.classList.contains('open') ? '✕' : '☰';
+                });
+            }
+        }
+
+        // Filters toggle
+        function setupFiltersToggle() {
+            document.getElementById('filtersToggle').addEventListener('click', function() {
+                const sidebar = document.getElementById('filtersSidebar');
+                sidebar.classList.toggle('hidden');
+                
+                const mainContent = document.querySelector('.main-content');
+                if (sidebar.classList.contains('hidden')) {
+                    mainContent.style.gridTemplateColumns = '1fr';
+                    this.textContent = '🔍 Show Filters';
+                } else {
+                    mainContent.style.gridTemplateColumns = '280px 1fr';
+                    this.textContent = '🔍 Hide Filters';
+                }
+            });
+        }
+
+        // Add to cart
+        function addToCart(productId, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            const product = allProducts.find(p => p.id === productId);
+            const cartBadge = document.getElementById('cartBadge');
+            const currentCount = parseInt(cartBadge.textContent);
+            cartBadge.textContent = currentCount + 1;
+            
+            showNotification(`💖 Added ${product.name} to cart! So kawaii! ✨`);
+            createSparkleExplosion();
+        }
+
+        // Toggle wishlist
+        function toggleWishlist(productId, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            const product = allProducts.find(p => p.id === productId);
+            showNotification(`💕 Added ${product.name} to wishlist! ✨`);
+        }
+
+        // Notifications
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.innerHTML = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(45deg, #ff1493, #ff69b4);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 25px;
+                font-weight: 600;
+                box-shadow: 0 0 30px rgba(255, 20, 147, 0.8);
+                z-index: 10000;
+                animation: slideInRight 0.5s ease-out;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                max-width: 300px;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.5s ease-in forwards';
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+
+        // Sparkle effects
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.innerHTML = '✨';
+            sparkle.style.position = 'fixed';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.fontSize = '20px';
+            sparkle.style.color = '#ff69b4';
+            sparkle.style.zIndex = '9999';
+            sparkle.style.animation = 'sparkleFloat 2s ease-out forwards';
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+
+        function createSparkleExplosion() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createSparkle(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight
+                    );
+                }, i * 100);
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize filtered products with all products
+            filteredProducts = [...allProducts];
+            
+            createFluffyClouds();
+            renderProducts();
+            setupFilters();
+            setupViewToggle();
+            setupMobileMenu();
+            setupFiltersToggle();
+
+            // Sort functionality
+            document.getElementById('sortSelect').addEventListener('change', function() {
+                sortProducts(this.value);
+            });
+
+            // Clear filters button
+            document.getElementById('clearFilters').addEventListener('click', clearAllFilters);
+
+            // Search functionality
+            document.getElementById('searchBtn').addEventListener('click', function() {
+                const query = document.getElementById('searchBox').value.trim();
+                if (query) {
+                    showNotification(`🔍 Searching for "${query}" in DevDoll collection... Coming soon! 💕`);
+                }
+            });
+
+            console.log('🎀 DevDoll collection loaded with product page navigation! 💖');
+        });
+    </script>
+</body>
+</html>

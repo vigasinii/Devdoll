@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - DevDoll</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8e1e8 0%, #f0c4d1 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* GIANT WHITE FLUFFY CLOUDS */
+        .cloud-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .cloud-column {
+            position: absolute;
+            bottom: -400px;
+            font-size: 300px;
+            color: rgba(255, 255, 255, 0.7);
+            animation: cloud-rise linear infinite;
+            text-shadow: 0 0 50px rgba(255, 255, 255, 0.9);
+            white-space: pre-line;
+            line-height: 0.8;
+        }
+
+        @keyframes cloud-rise {
+            0% { 
+                bottom: -400px;
+                opacity: 0;
+            }
+            15% {
+                opacity: 1;
+            }
+            85% {
+                opacity: 1;
+            }
+            100% { 
+                bottom: 120vh;
+                opacity: 0;
+            }
+        }
+
+        .top-banner {
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.4), rgba(255, 105, 180, 0.3));
+            text-align: center;
+            padding: 12px;
+            font-size: 13px;
+            color: #ff1493;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 182, 193, 0.1));
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff1493;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 10px rgba(255, 105, 180, 0.6);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            color: #ff69b4;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 1);
+        }
+
+        .checkout-progress {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(139, 77, 107, 0.6);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .progress-step.active {
+            color: #ff1493;
+        }
+
+        .progress-step.completed {
+            color: #10b981;
+        }
+
+        .step-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .progress-step.active .step-icon {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+        }
+
+        .progress-step.completed .step-icon {
+            background: #10b981;
+            color: white;
+        }
+
+        .progress-step:not(.active):not(.completed) .step-icon {
+            background: rgba(139, 77, 107, 0.2);
+            color: rgba(139, 77, 107, 0.6);
+        }
+
+        .back-to-cart {
+            color: #ff1493;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-to-cart:hover {
+            color: #ff69b4;
+            transform: translateX(-5px);
+        }
+
+        /* MAIN CHECKOUT */
+        .checkout-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 60px;
+        }
+
+        .checkout-main {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(255, 20, 147, 0.1);
+        }
+
+        .checkout-title {
+            color: #ff1493;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        /* FORM SECTIONS */
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            color: #ff1493;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-grid.single {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            color: rgba(139, 77, 107, 0.9);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-input {
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 12px;
+            font-size: 16px;
+            color: #8b4d6b;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            border-color: #ff1493;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.2);
+        }
+
+        .form-input.error {
+            border-color: #ff6b35;
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: rgba(139, 77, 107, 0.5);
+        }
+
+        .error-message {
+            color: #ff6b35;
+            font-size: 12px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .form-input.error + .error-message {
+            display: block;
+        }
+
+        /* SHIPPING OPTIONS */
+        .shipping-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .shipping-option {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .shipping-option:hover {
+            border-color: rgba(255, 20, 147, 0.3);
+            background: rgba(255, 20, 147, 0.05);
+        }
+
+        .shipping-option.selected {
+            border-color: #ff1493;
+            background: rgba(255, 20, 147, 0.1);
+        }
+
+        .shipping-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff1493;
+            border-radius: 50%;
+            margin-right: 15px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .shipping-option.selected .shipping-radio::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: #ff1493;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .shipping-details {
+            flex: 1;
+        }
+
+        .shipping-name {
+            color: #ff1493;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .shipping-time {
+            color: rgba(139, 77, 107, 0.8);
+            font-size: 14px;
+        }
+
+        .shipping-price {
+            color: #ff1493;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* PAYMENT METHODS */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .payment-method {
+            padding: 20px 15px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .payment-method:hover {
+            border-color: rgba(255, 20, 147, 0.3);
+            background: rgba(255, 20, 147, 0.05);
+        }
+
+        .payment-method.selected {
+            border-color: #ff1493;
+            background: rgba(255, 20, 147, 0.1);
+        }
+
+        .payment-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .payment-name {
+            color: #ff1493;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* CARD FORM */
+        .card-form {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .card-form.show {
+            display: block;
+        }
+
+        .card-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+        }
+
+        .card-visual {
+            background: linear-gradient(135deg, #ff1493, #ff69b4, #ffc0cb);
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            animation: sparkleRotate 8s linear infinite;
+        }
+
+        @keyframes sparkleRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .card-number {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-holder {
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .card-expiry {
+            font-family: 'Courier New', monospace;
+        }
+
+        .card-brand {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            z-index: 2;
+        }
+
+        /* CHECKOUT SIDEBAR */
+        .checkout-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .order-summary {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: sticky;
+            top: 120px;
+        }
+
+        .summary-title {
+            color: #ff1493;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ORDER ITEMS */
+        .order-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 20, 147, 0.2);
+        }
+
+        .item-image {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            color: #ff1493;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .item-options {
+            color: rgba(139, 77, 107, 0.7);
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .item-quantity {
+            color: rgba(139, 77, 107, 0.8);
+            font-size: 12px;
+        }
+
+        .item-price {
+            color: #ff1493;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* SUMMARY LINES */
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            color: rgba(139, 77, 107, 0.9);
+            font-size: 14px;
+        }
+
+        .summary-line.total {
+            border-top: 2px solid rgba(255, 20, 147, 0.2);
+            padding-top: 15px;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff1493;
+        }
+
+        .discount-line {
+            color: #10b981 !important;
+            font-weight: 600;
+        }
+
+        /* PLACE ORDER BUTTON */
+        .place-order-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            padding: 20px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .place-order-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .place-order-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 20, 147, 0.8);
+        }
+
+        .place-order-btn:hover::before {
+            left: 100%;
+        }
+
+        .place-order-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* SECURITY BADGES */
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+
+        .security-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(139, 77, 107, 0.7);
+            font-size: 10px;
+        }
+
+        .security-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: #10b981;
+        }
+
+        /* PROMO CODE */
+        .promo-section {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .promo-title {
+            color: #ff1493;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .promo-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .promo-code-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 20px;
+            font-size: 14px;
+            color: #8b4d6b;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .promo-code-input:focus {
+            border-color: #ff1493;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .apply-promo-btn {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+        }
+
+        .apply-promo-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.8);
+        }
+
+        .promo-message {
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .promo-message.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .promo-message.error {
+            background: rgba(255, 107, 53, 0.1);
+            color: #ff6b35;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+
+        /* SUCCESS STATE */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .success-modal {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            border: 3px solid rgba(255, 20, 147, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-modal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                rgba(255, 20, 147, 0.1),
+                rgba(255, 105, 180, 0.2),
+                transparent
+            );
+            animation: sparkleRotate 6s linear infinite;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+            animation: bounce 2s infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+
+        .success-title {
+            color: #ff1493;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .success-message {
+            color: rgba(139, 77, 107, 0.8);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .success-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .success-btn {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+            text-decoration: none;
+        }
+
+        .success-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.8);
+        }
+
+        .success-btn.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            color: #ff1493;
+        }
+
+        /* MOBILE STYLES */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .checkout-progress {
+                order: -1;
+            }
+
+            .checkout-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 20px 15px;
+            }
+
+            .checkout-main {
+                padding: 25px;
+            }
+
+            .checkout-title {
+                font-size: 1.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .card-row {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-methods {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .order-summary {
+                position: static;
+                order: -1;
+            }
+
+            .success-modal {
+                padding: 40px 25px;
+            }
+
+            .success-title {
+                font-size: 1.5rem;
+            }
+
+            .success-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Giant White Fluffy Clouds -->
+    <div class="cloud-bg" id="cloudBg"></div>
+
+    <div class="top-banner">
+        🌸 You bring the vibe, we'll bring the fluff — shipping's on us over Rs. 999!
+    </div>
+
+    <header class="header">
+        <div class="logo">🎀 DevDoll</div>
+        
+        <div class="checkout-progress">
+            <div class="progress-step completed">
+                <div class="step-icon">✓</div>
+                <span>Cart</span>
+            </div>
+            <span style="color: rgba(139, 77, 107, 0.4);">→</span>
+            <div class="progress-step active">
+                <div class="step-icon">2</div>
+                <span>Checkout</span>
+            </div>
+            <span style="color: rgba(139, 77, 107, 0.4);">→</span>
+            <div class="progress-step">
+                <div class="step-icon">3</div>
+                <span>Complete</span>
+            </div>
+        </div>
+
+        <a href="#" class="back-to-cart">← Back to Cart</a>
+    </header>
+
+    <div class="checkout-container">
+        <!-- Main Checkout Form -->
+        <div class="checkout-main">
+            <h1 class="checkout-title">💖 Secure Checkout</h1>
+
+            <!-- Contact Information -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    📧 Contact Information
+                </h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" class="form-input" id="email" placeholder="your.email@cute.dev" required>
+                        <span class="error-message">Please enter a valid email address</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-input" id="phone" placeholder="+1 (555) 123-4567">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shipping Address -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    🏠 Shipping Address
+                </h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">First Name *</label>
+                        <input type="text" class="form-input" id="firstName" placeholder="Kawaii" required>
+                        <span class="error-message">First name is required</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name *</label>
+                        <input type="text" class="form-input" id="lastName" placeholder="Developer" required>
+                        <span class="error-message">Last name is required</span>
+                    </div>
+                </div>
+                <div class="form-grid single">
+                    <div class="form-group">
+                        <label class="form-label">Address Line 1 *</label>
+                        <input type="text" class="form-input" id="address1" placeholder="123 Coding Street" required>
+                        <span class="error-message">Address is required</span>
+                    </div>
+                </div>
+                <div class="form-grid single">
+                    <div class="form-group">
+                        <label class="form-label">Address Line 2</label>
+                        <input type="text" class="form-input" id="address2" placeholder="Apartment, suite, etc. (optional)">
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">City *</label>
+                        <input type="text" class="form-input" id="city" placeholder="San Francisco" required>
+                        <span class="error-message">City is required</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">State/Province *</label>
+                        <input type="text" class="form-input" id="state" placeholder="CA" required>
+                        <span class="error-message">State is required</span>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">ZIP/Postal Code *</label>
+                        <input type="text" class="form-input" id="zip" placeholder="94102" required>
+                        <span class="error-message">ZIP code is required</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Country *</label>
+                        <select class="form-input" id="country" required>
+                            <option value="">Select Country</option>
+                            <option value="US">United States</option>
+                            <option value="CA">Canada</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="AU">Australia</option>
+                            <option value="DE">Germany</option>
+                            <option value="FR">France</option>
+                            <option value="JP">Japan</option>
+                            <option value="IN">India</option>
+                        </select>
+                        <span class="error-message">Country is required</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shipping Method -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    🚚 Shipping Method
+                </h2>
+                <div class="shipping-options">
+                    <div class="shipping-option selected" data-shipping="standard">
+                        <div class="shipping-radio"></div>
+                        <div class="shipping-details">
+                            <div class="shipping-name">Standard Shipping</div>
+                            <div class="shipping-time">5-7 business days</div>
+                        </div>
+                        <div class="shipping-price">FREE</div>
+                    </div>
+                    <div class="shipping-option" data-shipping="express">
+                        <div class="shipping-radio"></div>
+                        <div class="shipping-details">
+                            <div class="shipping-name">Express Shipping</div>
+                            <div class="shipping-time">2-3 business days</div>
+                        </div>
+                        <div class="shipping-price">Rs. 199</div>
+                    </div>
+                    <div class="shipping-option" data-shipping="overnight">
+                        <div class="shipping-radio"></div>
+                        <div class="shipping-details">
+                            <div class="shipping-name">Overnight Delivery</div>
+                            <div class="shipping-time">Next business day</div>
+                        </div>
+                        <div class="shipping-price">Rs. 499</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    💳 Payment Method
+                </h2>
+                <div class="payment-methods">
+                    <div class="payment-method selected" data-payment="card">
+                        <div class="payment-icon">💳</div>
+                        <div class="payment-name">Credit Card</div>
+                    </div>
+                    <div class="payment-method" data-payment="paypal">
+                        <div class="payment-icon">🏦</div>
+                        <div class="payment-name">PayPal</div>
+                    </div>
+                    <div class="payment-method" data-payment="apple">
+                        <div class="payment-icon">📱</div>
+                        <div class="payment-name">Apple Pay</div>
+                    </div>
+                    <div class="payment-method" data-payment="google">
+                        <div class="payment-icon">🤖</div>
+                        <div class="payment-name">Google Pay</div>
+                    </div>
+                </div>
+
+                <!-- Credit Card Form -->
+                <div class="card-form show" id="cardForm">
+                    <div class="card-visual">
+                        <div class="card-brand" id="cardBrand">💳</div>
+                        <div class="card-number" id="cardNumberDisplay">•••• •••• •••• ••••</div>
+                        <div class="card-details">
+                            <div class="card-holder" id="cardHolderDisplay">Your Name</div>
+                            <div class="card-expiry" id="cardExpiryDisplay">MM/YY</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid single">
+                        <div class="form-group">
+                            <label class="form-label">Card Number *</label>
+                            <input type="text" class="form-input" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                            <span class="error-message">Please enter a valid card number</span>
+                        </div>
+                    </div>
+                    <div class="form-grid single">
+                        <div class="form-group">
+                            <label class="form-label">Cardholder Name *</label>
+                            <input type="text" class="form-input" id="cardHolder" placeholder="Kawaii Developer" required>
+                            <span class="error-message">Cardholder name is required</span>
+                        </div>
+                    </div>
+                    <div class="card-row">
+                        <div class="form-group">
+                            <label class="form-label">Expiry Date *</label>
+                            <input type="text" class="form-input" id="cardExpiry" placeholder="MM/YY" maxlength="5" required>
+                            <span class="error-message">Valid expiry date required</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">CVV *</label>
+                            <input type="text" class="form-input" id="cardCvv" placeholder="123" maxlength="4" required>
+                            <span class="error-message">CVV is required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary Sidebar -->
+        <div class="checkout-sidebar">
+            <!-- Promo Code -->
+            <div class="promo-section">
+                <div class="promo-title">
+                    🎁 Promo Code
+                </div>
+                <div class="promo-input">
+                    <input type="text" class="promo-code-input" placeholder="Enter code" id="promoInput">
+                    <button class="apply-promo-btn" id="applyPromoBtn">Apply</button>
+                </div>
+                <div class="promo-message" id="promoMessage"></div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h2 class="summary-title">
+                    📋 Order Summary
+                </h2>
+
+                <!-- Order Items -->
+                <div class="order-item">
+                    <div class="item-image">🎀</div>
+                    <div class="item-details">
+                        <div class="item-name">Kawaii Developer Tee</div>
+                        <div class="item-options">Size: M, Color: Pink</div>
+                        <div class="item-quantity">Qty: 1</div>
+                    </div>
+                    <div class="item-price">Rs. 974.25</div>
+                </div>
+
+                <div class="order-item">
+                    <div class="item-image">💖</div>
+                    <div class="item-details">
+                        <div class="item-name">Dream Crop Top</div>
+                        <div class="item-options">Size: S, Color: Purple</div>
+                        <div class="item-quantity">Qty: 2</div>
+                    </div>
+                    <div class="item-price">Rs. 1,498.50</div>
+                </div>
+
+                <div class="order-item">
+                    <div class="item-image">🌸</div>
+                    <div class="item-details">
+                        <div class="item-name">Pink Kawaii Hoodie</div>
+                        <div class="item-options">Size: L, Color: Pink</div>
+                        <div class="item-quantity">Qty: 1</div>
+                    </div>
+                    <div class="item-price">Rs. 1,329.30</div>
+                </div>
+
+                <!-- Summary Lines -->
+                <div class="summary-line">
+                    <span>Subtotal (4 items)</span>
+                    <span id="subtotal">Rs. 3,802.05</span>
+                </div>
+                <div class="summary-line">
+                    <span>Shipping</span>
+                    <span id="shippingCost">FREE</span>
+                </div>
+                <div class="summary-line">
+                    <span>Tax</span>
+                    <span id="taxAmount">Rs. 304.16</span>
+                </div>
+                <div class="summary-line discount-line" id="discountLine" style="display: none;">
+                    <span>Discount</span>
+                    <span id="discountAmount">-Rs. 0</span>
+                </div>
+                <div class="summary-line total">
+                    <span>Total</span>
+                    <span id="totalAmount">Rs. 4,106.21</span>
+                </div>
+
+                <button class="place-order-btn" id="placeOrderBtn">
+                    Place Order - Rs. 4,106.21
+                </button>
+
+                <div class="security-badges">
+                    <div class="security-badge">
+                        <div class="security-icon">🔒</div>
+                        <div>SSL Secure</div>
+                    </div>
+                    <div class="security-badge">
+                        <div class="security-icon">🛡️</div>
+                        <div>Protected</div>
+                    </div>
+                    <div class="security-badge">
+                        <div class="security-icon">✅</div>
+                        <div>Verified</div>
+                    </div>
+                    <div class="security-badge">
+                        <div class="security-icon">💳</div>
+                        <div>Safe Pay</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-modal">
+            <div class="success-icon">🎉</div>
+            <h2 class="success-title">Order Placed Successfully!</h2>
+            <p class="success-message">
+                Woohoo! Your kawaii order is confirmed! 💖<br>
+                Order #DD-2025-001337<br><br>
+                You'll receive a confirmation email shortly with tracking information.
+                Get ready to look absolutely adorable! ✨
+            </p>
+            <div class="success-actions">
+                <a href="#" class="success-btn">Track Order</a>
+                <a href="#" class="success-btn secondary">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedShipping = 'standard';
+        let selectedPayment = 'card';
+        let appliedPromo = null;
+
+        const shippingCosts = {
+            standard: 0,
+            express: 199,
+            overnight: 499
+        };
+
+        const validPromoCodes = {
+            'DOLLMEUP70': { type: 'percentage', value: 70, description: '70% OFF Everything!' },
+            'KAWAII50': { type: 'percentage', value: 50, description: '50% OFF Kawaii Items!' },
+            'SAVE200': { type: 'fixed', value: 200, description: 'Rs. 200 OFF Your Order!' },
+            'WELCOME25': { type: 'percentage', value: 25, description: '25% OFF Welcome Deal!' }
+        };
+
+        // Cloud Background
+        function createFluffyClouds() {
+            const cloudBg = document.getElementById('cloudBg');
+            if (!cloudBg) return;
+            
+            const cloudSymbols = ['☁️'];
+            
+            for (let i = 0; i < 4; i++) {
+                setTimeout(() => {
+                    const column = document.createElement('div');
+                    column.className = 'cloud-column';
+                    column.style.left = Math.random() * 100 + '%';
+                    column.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                    column.style.animationDelay = Math.random() * 8 + 's';
+                    
+                    column.textContent = cloudSymbols[0];
+                    cloudBg.appendChild(column);
+                    
+                    setTimeout(() => {
+                        if (column.parentNode) {
+                            column.remove();
+                        }
+                    }, 35000);
+                }, i * 1000);
+            }
+            
+            setInterval(() => {
+                if (cloudBg.children.length < 3) {
+                    const column = document.createElement('div');
+                    column.className = 'cloud-column';
+                    column.style.left = Math.random() * 100 + '%';
+                    column.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                    
+                    column.textContent = cloudSymbols[0];
+                    cloudBg.appendChild(column);
+                    
+                    setTimeout(() => {
+                        if (column.parentNode) {
+                            column.remove();
+                        }
+                    }, 35000);
+                }
+            }, 8000);
+        }
+
+        // Form validation
+        function validateField(field) {
+            const value = field.value.trim();
+            const isRequired = field.hasAttribute('required');
+            
+            if (isRequired && !value) {
+                field.classList.add('error');
+                return false;
+            }
+            
+            // Email validation
+            if (field.type === 'email' && value) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) {
+                    field.classList.add('error');
+                    return false;
+                }
+            }
+            
+            // Card number validation
+            if (field.id === 'cardNumber' && value) {
+                const cleanNumber = value.replace(/\s/g, '');
+                if (cleanNumber.length < 13 || cleanNumber.length > 19) {
+                    field.classList.add('error');
+                    return false;
+                }
+            }
+            
+            // CVV validation
+            if (field.id === 'cardCvv' && value) {
+                if (value.length < 3) {
+                    field.classList.add('error');
+                    return false;
+                }
+            }
+            
+            field.classList.remove('error');
+            return true;
+        }
+
+        // Card formatting
+        function formatCardNumber(value) {
+            const cleanValue = value.replace(/\s/g, '');
+            const groups = cleanValue.match(/.{1,4}/g) || [];
+            return groups.join(' ').substr(0, 19);
+        }
+
+        function formatExpiry(value) {
+            const cleanValue = value.replace(/\D/g, '');
+            if (cleanValue.length >= 2) {
+                return cleanValue.substr(0, 2) + '/' + cleanValue.substr(2, 2);
+            }
+            return cleanValue;
+        }
+
+        // Update card visual
+        function updateCardVisual() {
+            const cardNumber = document.getElementById('cardNumber').value;
+            const cardHolder = document.getElementById('cardHolder').value;
+            const cardExpiry = document.getElementById('cardExpiry').value;
+            
+            document.getElementById('cardNumberDisplay').textContent = 
+                cardNumber || '•••• •••• •••• ••••';
+            document.getElementById('cardHolderDisplay').textContent = 
+                cardHolder.toUpperCase() || 'YOUR NAME';
+            document.getElementById('cardExpiryDisplay').textContent = 
+                cardExpiry || 'MM/YY';
+            
+            // Update card brand
+            const firstDigit = cardNumber.replace(/\s/g, '').charAt(0);
+            let brand = '💳';
+            if (firstDigit === '4') brand = '💎'; // Visa
+            else if (firstDigit === '5') brand = '🔷'; // Mastercard
+            else if (firstDigit === '3') brand = '💠'; // Amex
+            
+            document.getElementById('cardBrand').textContent = brand;
+        }
+
+        // Setup form interactions
+        function setupFormInteractions() {
+            // Form validation on blur
+            document.querySelectorAll('.form-input').forEach(input => {
+                input.addEventListener('blur', () => validateField(input));
+                input.addEventListener('input', () => {
+                    if (input.classList.contains('error')) {
+                        validateField(input);
+                    }
+                });
+            });
+
+            // Card number formatting
+            document.getElementById('cardNumber').addEventListener('input', function() {
+                this.value = formatCardNumber(this.value);
+                updateCardVisual();
+            });
+
+            // Card holder formatting
+            document.getElementById('cardHolder').addEventListener('input', updateCardVisual);
+
+            // Expiry formatting
+            document.getElementById('cardExpiry').addEventListener('input', function() {
+                this.value = formatExpiry(this.value);
+                updateCardVisual();
+            });
+
+            // CVV numeric only
+            document.getElementById('cardCvv').addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '');
+            });
+        }
+
+        // Shipping selection
+        function setupShippingSelection() {
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.shipping-option')) {
+                    const option = e.target.closest('.shipping-option');
+                    const shipping = option.dataset.shipping;
+
+                    document.querySelectorAll('.shipping-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    option.classList.add('selected');
+
+                    selectedShipping = shipping;
+                    updateOrderSummary();
+                    showNotification(`Selected ${option.querySelector('.shipping-name').textContent} 🚚`);
+                }
+            });
+        }
+
+        // Payment method selection
+        function setupPaymentSelection() {
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.payment-method')) {
+                    const method = e.target.closest('.payment-method');
+                    const payment = method.dataset.payment;
+
+                    document.querySelectorAll('.payment-method').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    method.classList.add('selected');
+
+                    selectedPayment = payment;
+                    
+                    // Show/hide card form
+                    const cardForm = document.getElementById('cardForm');
+                    if (payment === 'card') {
+                        cardForm.classList.add('show');
+                    } else {
+                        cardForm.classList.remove('show');
+                    }
+                    
+                    showNotification(`Selected ${method.querySelector('.payment-name').textContent} 💳`);
+                }
+            });
+        }
+
+        // Promo code functionality
+        function setupPromoCode() {
+            document.getElementById('applyPromoBtn').addEventListener('click', function() {
+                const promoInput = document.getElementById('promoInput');
+                const code = promoInput.value.trim().toUpperCase();
+                const promoMessage = document.getElementById('promoMessage');
+
+                if (!code) {
+                    showPromoMessage('Please enter a promo code! 💕', 'error');
+                    return;
+                }
+
+                if (validPromoCodes[code]) {
+                    appliedPromo = validPromoCodes[code];
+                    showPromoMessage(`🎉 ${appliedPromo.description}`, 'success');
+                    promoInput.value = '';
+                    updateOrderSummary();
+                    createSparkleExplosion();
+                } else {
+                    showPromoMessage('Invalid promo code. Try DOLLMEUP70! 💔', 'error');
+                }
+            });
+
+            // Enter key support
+            document.getElementById('promoInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('applyPromoBtn').click();
+                }
+            });
+        }
+
+        function showPromoMessage(message, type) {
+            const promoMessage = document.getElementById('promoMessage');
+            promoMessage.textContent = message;
+            promoMessage.className = `promo-message ${type}`;
+            promoMessage.style.display = 'block';
+
+            setTimeout(() => {
+                promoMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        // Update order summary
+        function updateOrderSummary() {
+            const subtotal = 3802.05;
+            const shipping = shippingCosts[selectedShipping];
+            const tax = Math.round((subtotal + shipping) * 0.08 * 100) / 100;
+            let discount = 0;
+
+            if (appliedPromo) {
+                if (appliedPromo.type === 'percentage') {
+                    discount = Math.round(subtotal * (appliedPromo.value / 100) * 100) / 100;
+                } else {
+                    discount = appliedPromo.value;
+                }
+            }
+
+            const total = subtotal + shipping + tax - discount;
+
+            document.getElementById('shippingCost').textContent = shipping === 0 ? 'FREE' : `Rs. ${shipping.toFixed(2)}`;
+            document.getElementById('taxAmount').textContent = `Rs. ${tax.toFixed(2)}`;
+            document.getElementById('totalAmount').textContent = `Rs. ${total.toFixed(2)}`;
+            document.getElementById('placeOrderBtn').textContent = `Place Order - Rs. ${total.toFixed(2)}`;
+
+            const discountLine = document.getElementById('discountLine');
+            if (discount > 0) {
+                discountLine.style.display = 'flex';
+                document.getElementById('discountAmount').textContent = `-Rs. ${discount.toFixed(2)}`;
+            } else {
+                discountLine.style.display = 'none';
+            }
+        }
+
+        // Place order
+        function setupPlaceOrder() {
+            document.getElementById('placeOrderBtn').addEventListener('click', function() {
+                // Validate required fields
+                const requiredFields = document.querySelectorAll('.form-input[required]');
+                let isValid = true;
+
+                requiredFields.forEach(field => {
+                    if (!validateField(field)) {
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    showNotification('Please fill in all required fields! 💕');
+                    return;
+                }
+
+                // Show loading state
+                this.disabled = true;
+                this.textContent = 'Processing Order... 💖';
+
+                // Simulate processing delay
+                setTimeout(() => {
+                    document.getElementById('successOverlay').style.display = 'flex';
+                    createSparkleExplosion();
+                    
+                    // Reset button
+                    this.disabled = false;
+                    this.textContent = `Place Order - ${document.getElementById('totalAmount').textContent}`;
+                }, 2000);
+            });
+        }
+
+        // Success modal
+        function setupSuccessModal() {
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.success-btn')) {
+                    e.preventDefault();
+                    const btn = e.target.closest('.success-btn');
+                    
+                    if (btn.textContent.includes('Track')) {
+                        showNotification('🚚 Order tracking coming soon! You\'ll get email updates! 📧');
+                    } else {
+                        showNotification('🛍️ Thanks for shopping with DevDoll! More kawaii items await! 💖');
+                    }
+                }
+
+                if (e.target.id === 'successOverlay') {
+                    document.getElementById('successOverlay').style.display = 'none';
+                }
+            });
+        }
+
+        // Notifications
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.innerHTML = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(45deg, #ff1493, #ff69b4);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 25px;
+                font-weight: 600;
+                box-shadow: 0 0 30px rgba(255, 20, 147, 0.8);
+                z-index: 10000;
+                animation: slideInRight 0.5s ease-out;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                max-width: 300px;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.5s ease-in forwards';
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+
+        // Sparkle effects
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.innerHTML = '✨';
+            sparkle.style.position = 'fixed';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.fontSize = '20px';
+            sparkle.style.color = '#ff69b4';
+            sparkle.style.zIndex = '9999';
+            sparkle.style.animation = 'sparkleFloat 2s ease-out forwards';
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+
+        function createSparkleExplosion() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createSparkle(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight
+                    );
+                }, i * 100);
+            }
+        }
+
+        // CSS Animations
+        const styles = document.createElement('style');
+        styles.textContent = `
+            @keyframes sparkleFloat {
+                0% {
+                    transform: translateY(0) scale(1) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100px) scale(0) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes slideInRight {
+                0% {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                100% {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideOutRight {
+                0% {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(styles);
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            createFluffyClouds();
+            setupFormInteractions();
+            setupShippingSelection();
+            setupPaymentSelection();
+            setupPromoCode();
+            setupPlaceOrder();
+            setupSuccessModal();
+            updateOrderSummary();
+
+            console.log('💳 Checkout page loaded with all kawaii features! 💖');
+        });
+    </script>
+</body>
+</html>

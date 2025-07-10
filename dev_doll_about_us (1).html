@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - DevDoll</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8e1e8 0%, #f0c4d1 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* GIANT WHITE FLUFFY CLOUDS */
+        .cloud-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .cloud-column {
+            position: absolute;
+            bottom: -400px;
+            font-size: 300px;
+            color: rgba(255, 255, 255, 0.7);
+            animation: cloud-rise linear infinite;
+            text-shadow: 0 0 50px rgba(255, 255, 255, 0.9);
+            white-space: pre-line;
+            line-height: 0.8;
+        }
+
+        @keyframes cloud-rise {
+            0% { 
+                bottom: -400px;
+                opacity: 0;
+            }
+            15% {
+                opacity: 1;
+            }
+            85% {
+                opacity: 1;
+            }
+            100% { 
+                bottom: 120vh;
+                opacity: 0;
+            }
+        }
+
+        .top-banner {
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.4), rgba(255, 105, 180, 0.3));
+            text-align: center;
+            padding: 12px;
+            font-size: 13px;
+            color: #ff1493;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 182, 193, 0.1));
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff1493;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 10px rgba(255, 105, 180, 0.6);
+            order: 1;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            color: #ff69b4;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 1);
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+            order: 2;
+            margin: 0 20px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 45px 12px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 25px;
+            font-size: 14px;
+            color: #8b4d6b;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            order: 3;
+        }
+
+        .cart-icon {
+            position: relative;
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.8), rgba(255, 105, 180, 0.6));
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff6b35;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #ff1493;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            order: 4;
+        }
+
+        .nav {
+            display: flex;
+            gap: 25px;
+            order: 5;
+        }
+
+        .nav a {
+            color: #ff1493;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.3), rgba(255, 105, 180, 0.2));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 20px;
+        }
+
+        .nav a:hover {
+            opacity: 1;
+            color: #ff69b4;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .nav a:hover::before {
+            opacity: 1;
+        }
+
+        .nav a.active {
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.4), rgba(255, 105, 180, 0.3));
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* HERO SECTION */
+        .hero-section {
+            text-align: center;
+            padding: 80px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            color: #ff1493;
+            margin-bottom: 20px;
+            font-weight: 300;
+            background: linear-gradient(45deg, #ff1493, #ff69b4, #ffc0cb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleShimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes titleShimmer {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: rgba(139, 77, 107, 0.9);
+            margin-bottom: 30px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: rgba(139, 77, 107, 0.8);
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        /* FLOATING ELEMENTS */
+        .floating-element {
+            position: absolute;
+            font-size: 48px;
+            opacity: 0.7;
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .floating-element:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 20%; right: 15%; animation-delay: 1s; }
+        .floating-element:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 2s; }
+        .floating-element:nth-child(4) { bottom: 20%; right: 10%; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* STORY SECTION */
+        .story-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #ff1493;
+            margin-bottom: 60px;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            border-radius: 2px;
+        }
+
+        .story-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(139, 77, 107, 0.9);
+        }
+
+        .story-text h3 {
+            color: #ff1493;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .story-text p {
+            margin-bottom: 20px;
+        }
+
+        .story-visual {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                rgba(255, 20, 147, 0.1),
+                rgba(255, 105, 180, 0.2),
+                rgba(255, 182, 193, 0.1),
+                transparent
+            );
+            animation: sparkleRotate 8s linear infinite;
+        }
+
+        @keyframes sparkleRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .story-icon {
+            font-size: 120px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-caption {
+            color: #ff1493;
+            font-weight: 600;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* MISSION CARDS */
+        .mission-section {
+            padding: 80px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .mission-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 20, 147, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .mission-card:hover::before {
+            left: 100%;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 20, 147, 0.3);
+            border-color: rgba(255, 20, 147, 0.5);
+        }
+
+        .mission-icon {
+            font-size: 80px;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .mission-title {
+            color: #ff1493;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .mission-description {
+            color: rgba(139, 77, 107, 0.8);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* TEAM SECTION */
+        .team-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .team-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 20, 147, 0.3);
+            border-color: rgba(255, 20, 147, 0.4);
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493, #ffc0cb);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-avatar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            animation: sparkleRotate 4s linear infinite;
+        }
+
+        .team-name {
+            color: #ff1493;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .team-role {
+            color: #ff69b4;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .team-bio {
+            color: rgba(139, 77, 107, 0.8);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 20, 147, 0.1);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            border-radius: 50%;
+            color: #ff1493;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .social-btn:hover {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border-color: #ff1493;
+            transform: scale(1.1);
+        }
+
+        /* VALUES SECTION */
+        .values-section {
+            padding: 80px 20px;
+            background: rgba(255, 182, 193, 0.1);
+            border-radius: 40px;
+            margin: 40px 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .values-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .values-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .value-item {
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .value-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 20, 147, 0.2);
+            border-color: rgba(255, 20, 147, 0.3);
+        }
+
+        .value-emoji {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .value-title {
+            color: #ff1493;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .value-description {
+            color: rgba(139, 77, 107, 0.8);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* CTA SECTION */
+        .cta-section {
+            text-align: center;
+            padding: 80px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            color: #ff1493;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .cta-description {
+            font-size: 1.1rem;
+            color: rgba(139, 77, 107, 0.8);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 20, 147, 0.8);
+        }
+
+        .cta-btn:hover::before {
+            left: 100%;
+        }
+
+        .cta-btn.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            color: #ff1493;
+        }
+
+        .cta-btn.secondary:hover {
+            background: rgba(255, 20, 147, 0.1);
+            border-color: #ff1493;
+        }
+
+        /* MOBILE STYLES */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px;
+                flex-wrap: wrap;
+            }
+
+            .search-container {
+                order: 3;
+                width: 100%;
+                margin: 10px 0;
+                max-width: none;
+            }
+
+            .nav {
+                display: none;
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, rgba(255, 182, 193, 0.95), rgba(255, 105, 180, 0.9));
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+                border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+                z-index: 999;
+            }
+
+            .nav.open {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .story-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .floating-element {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .mission-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+
+            .values-list {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Giant White Fluffy Clouds -->
+    <div class="cloud-bg" id="cloudBg"></div>
+
+    <div class="top-banner">
+        🌸 You bring the vibe, we'll bring the fluff — shipping's on us over Rs. 999!
+    </div>
+
+    <header class="header">
+        <div class="logo">🎀 DevDoll</div>
+        
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search cute developer merch..." id="searchBox">
+            <button class="search-btn" id="searchBtn">🔍</button>
+        </div>
+
+        <div class="header-actions">
+            <button class="cart-icon" id="cartBtn">
+                🛒
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+
+        <nav class="nav" id="navMenu">
+            <a href="#dollhouse">dollhouse</a>
+            <a href="#shoppe">shoppe</a>
+            <a href="#tales" class="active">our story ✨</a>
+            <a href="#buzz">buzz</a>
+            <a href="#snuggles">snuggles</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="floating-element">💖</div>
+        <div class="floating-element">✨</div>
+        <div class="floating-element">🦄</div>
+        <div class="floating-element">🌸</div>
+        
+        <h1 class="hero-title">About DevDoll</h1>
+        <h2 class="hero-subtitle">Where Kawaii Meets Code</h2>
+        <p class="hero-description">
+            We're not just a brand - we're a movement. DevDoll was born from the belief that female developers 
+            deserve fashion that's as brilliant, cute, and powerful as they are. Every stitch tells a story 
+            of code, creativity, and unabashed kawaii confidence. 💖
+        </p>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <h2 class="section-title">Our Story</h2>
+        
+        <div class="story-content">
+            <div class="story-text">
+                <h3>From Debug to Debut 💻</h3>
+                <p>
+                    It all started at 2 AM during a particularly brutal debugging session. Our founder, exhausted 
+                    and caffeine-fueled, looked down at her old, boring t-shirt and thought: "Why does developer 
+                    fashion have to be so... blah?"
+                </p>
+                <p>
+                    That moment sparked an idea - what if we could create merch that celebrated the cute, 
+                    creative, and confident side of coding? What if being a developer could be kawaii AND cool?
+                </p>
+                <p>
+                    DevDoll was born from late-night coding sessions, fueled by bubble tea and powered by the 
+                    belief that brilliant women deserve fashion that matches their brilliance. ✨
+                </p>
+            </div>
+            <div class="story-visual">
+                <div class="story-icon">🌟</div>
+                <div class="story-caption">Born from Brilliance</div>
+            </div>
+        </div>
+
+        <div class="story-content">
+            <div class="story-visual">
+                <div class="story-icon">💡</div>
+                <div class="story-caption">Kawaii Innovation</div>
+            </div>
+            <div class="story-text">
+                <h3>The Kawaii Revolution 🎀</h3>
+                <p>
+                    We noticed something in the tech world - amazing female developers hiding their personality 
+                    behind generic hoodies and boring tees. The industry told them to "fit in," but we said 
+                    "stand out!"
+                </p>
+                <p>
+                    DevDoll challenges the stereotype that serious coders can't be cute, fun, and fashionable. 
+                    We prove that you can write elegant code AND wear elegant clothes. You can debug systems 
+                    AND be absolutely adorable doing it.
+                </p>
+                <p>
+                    Every DevDoll piece is designed to celebrate your unique blend of technical brilliance 
+                    and kawaii confidence. Because being cute isn't weakness - it's power. 💪💖
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <h2 class="section-title">Our Mission</h2>
+        
+        <div class="mission-grid">
+            <div class="mission-card">
+                <div class="mission-icon">🎯</div>
+                <div class="mission-title">Celebrate Authenticity</div>
+                <div class="mission-description">
+                    Encourage female developers to embrace their full selves - brilliant, creative, 
+                    cute, and confident. Your personality is your superpower.
+                </div>
+            </div>
+            
+            <div class="mission-card">
+                <div class="mission-icon">🌈</div>
+                <div class="mission-title">Break Stereotypes</div>
+                <div class="mission-description">
+                    Challenge the notion that tech has to be masculine, boring, or serious. 
+                    Show the world that kawaii coders are changing the game.
+                </div>
+            </div>
+            
+            <div class="mission-card">
+                <div class="mission-icon">✨</div>
+                <div class="mission-title">Inspire Confidence</div>
+                <div class="mission-description">
+                    Create fashion that makes you feel as amazing as your code. When you look good, 
+                    you code good, and your confidence radiates.
+                </div>
+            </div>
+            
+            <div class="mission-card">
+                <div class="mission-icon">🤝</div>
+                <div class="mission-title">Build Community</div>
+                <div class="mission-description">
+                    Foster a community where female developers support, celebrate, and inspire each other. 
+                    Together, we're unstoppable.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <h2 class="section-title">Meet the Team</h2>
+        
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar">👑</div>
+                <div class="team-name">Sakura Chen</div>
+                <div class="team-role">Founder & CEO</div>
+                <div class="team-bio">
+                    Former Google engineer turned fashion entrepreneur. Believes every line of code 
+                    deserves a cute outfit. Powered by matcha lattes and pixel-perfect designs.
+                </div>
+                <div class="team-social">
+                    <a href="#" class="social-btn">💼</a>
+                    <a href="#" class="social-btn">🐦</a>
+                    <a href="#" class="social-btn">📷</a>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-avatar">🎨</div>
+                <div class="team-name">Luna Rodriguez</div>
+                <div class="team-role">Head of Design</div>
+                <div class="team-bio">
+                    UI/UX designer who brings kawaii aesthetics to life. Specializes in making 
+                    tech culture cute and approachable. Dreams in Figma and Photoshop.
+                </div>
+                <div class="team-social">
+                    <a href="#" class="social-btn">🎨</a>
+                    <a href="#" class="social-btn">📸</a>
+                    <a href="#" class="social-btn">✨</a>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-avatar">🚀</div>
+                <div class="team-name">Maya Patel</div>
+                <div class="team-role">Tech Lead</div>
+                <div class="team-bio">
+                    Full-stack developer who codes the magic behind DevDoll. Builds scalable systems 
+                    and scalable confidence. Debugging champion and bubble tea enthusiast.
+                </div>
+                <div class="team-social">
+                    <a href="#" class="social-btn">💻</a>
+                    <a href="#" class="social-btn">🔗</a>
+                    <a href="#" class="social-btn">⚡</a>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-avatar">💎</div>
+                <div class="team-name">Zara Kim</div>
+                <div class="team-role">Community Manager</div>
+                <div class="team-bio">
+                    DevRel expert who builds bridges between code and community. Organizes kawaii 
+                    coding meetups and spreads positivity across social platforms.
+                </div>
+                <div class="team-social">
+                    <a href="#" class="social-btn">💬</a>
+                    <a href="#" class="social-btn">🌟</a>
+                    <a href="#" class="social-btn">💖</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="values-container">
+            <h2 class="section-title">Our Values</h2>
+            <p style="font-size: 1.1rem; color: rgba(139, 77, 107, 0.8); margin-bottom: 40px;">
+                These principles guide everything we do, from design to community building.
+            </p>
+            
+            <div class="values-list">
+                <div class="value-item">
+                    <div class="value-emoji">💖</div>
+                    <div class="value-title">Authenticity First</div>
+                    <div class="value-description">Be genuine, be yourself, be unapologetically you.</div>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-emoji">🌟</div>
+                    <div class="value-title">Quality Always</div>
+                    <div class="value-description">From code to cotton, we never compromise on excellence.</div>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-emoji">🤗</div>
+                    <div class="value-title">Inclusive Joy</div>
+                    <div class="value-description">Everyone deserves to feel cute, confident, and celebrated.</div>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-emoji">🚀</div>
+                    <div class="value-title">Innovation Spirit</div>
+                    <div class="value-description">Always pushing boundaries in fashion and technology.</div>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-emoji">🌱</div>
+                    <div class="value-title">Sustainable Future</div>
+                    <div class="value-description">Ethical production and eco-friendly practices matter.</div>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-emoji">✨</div>
+                    <div class="value-title">Kawaii Magic</div>
+                    <div class="value-description">Life's too short for boring clothes and boring code.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2 class="cta-title">Join the DevDoll Family</h2>
+        <p class="cta-description">
+            Ready to embrace your kawaii coding confidence? Join thousands of amazing female developers 
+            who've discovered that brilliant and beautiful aren't mutually exclusive. Your journey to 
+            authentic, adorable developer fashion starts here. 💫
+        </p>
+        
+        <div class="cta-buttons">
+            <a href="#" class="cta-btn">
+                🛍️ Shop Collection
+            </a>
+            <a href="#" class="cta-btn secondary">
+                💌 Join Newsletter
+            </a>
+            <a href="#" class="cta-btn secondary">
+                👥 Community
+            </a>
+        </div>
+    </section>
+
+    <script>
+        // Cloud Background
+        function createFluffyClouds() {
+            const cloudBg = document.getElementById('cloudBg');
+            if (!cloudBg) return;
+            
+            const cloudSymbols = ['☁️'];
+            
+            for (let i = 0; i < 4; i++) {
+                setTimeout(() => {
+                    const column = document.createElement('div');
+                    column.className = 'cloud-column';
+                    column.style.left = Math.random() * 100 + '%';
+                    column.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                    column.style.animationDelay = Math.random() * 8 + 's';
+                    
+                    column.textContent = cloudSymbols[0];
+                    cloudBg.appendChild(column);
+                    
+                    setTimeout(() => {
+                        if (column.parentNode) {
+                            column.remove();
+                        }
+                    }, 35000);
+                }, i * 1000);
+            }
+            
+            setInterval(() => {
+                if (cloudBg.children.length < 3) {
+                    const column = document.createElement('div');
+                    column.className = 'cloud-column';
+                    column.style.left = Math.random() * 100 + '%';
+                    column.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                    
+                    column.textContent = cloudSymbols[0];
+                    cloudBg.appendChild(column);
+                    
+                    setTimeout(() => {
+                        if (column.parentNode) {
+                            column.remove();
+                        }
+                    }, 35000);
+                }
+            }, 8000);
+        }
+
+        // Mobile menu
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (mobileMenuBtn && navMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navMenu.classList.toggle('open');
+                    this.textContent = navMenu.classList.contains('open') ? '✕' : '☰';
+                });
+
+                // Close menu when clicking nav links
+                navMenu.addEventListener('click', function(e) {
+                    if (e.target.tagName === 'A') {
+                        navMenu.classList.remove('open');
+                        mobileMenuBtn.textContent = '☰';
+                    }
+                });
+            }
+        }
+
+        // Sparkle effects
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.innerHTML = '✨';
+            sparkle.style.position = 'fixed';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.fontSize = '20px';
+            sparkle.style.color = '#ff69b4';
+            sparkle.style.zIndex = '9999';
+            sparkle.style.animation = 'sparkleFloat 2s ease-out forwards';
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+
+        function createSparkleExplosion() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createSparkle(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight
+                    );
+                }, i * 100);
+            }
+        }
+
+        // Notifications
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.innerHTML = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(45deg, #ff1493, #ff69b4);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 25px;
+                font-weight: 600;
+                box-shadow: 0 0 30px rgba(255, 20, 147, 0.8);
+                z-index: 10000;
+                animation: slideInRight 0.5s ease-out;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                max-width: 300px;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.5s ease-in forwards';
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+
+        // Interactive hover effects
+        function setupInteractiveEffects() {
+            // Add sparkle trail on mission cards
+            document.addEventListener('mousemove', function(e) {
+                if (e.target.closest('.mission-card') || e.target.closest('.team-card')) {
+                    if (Math.random() < 0.1) { // 10% chance
+                        createSparkle(e.pageX, e.pageY);
+                    }
+                }
+            });
+
+            // CTA button effects
+            document.querySelectorAll('.cta-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const text = this.textContent.trim();
+                    
+                    if (text.includes('Shop')) {
+                        showNotification('🛍️ Redirecting to shop... Get ready for kawaii overload! ✨');
+                    } else if (text.includes('Newsletter')) {
+                        showNotification('💌 Newsletter signup coming soon! Stay tuned for cuteness! 💖');
+                    } else if (text.includes('Community')) {
+                        showNotification('👥 Community features launching soon! Join the kawaii revolution! 🚀');
+                    }
+                    
+                    createSparkleExplosion();
+                });
+            });
+
+            // Social button effects
+            document.querySelectorAll('.social-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showNotification('🔗 Social links coming soon! Follow us for kawaii updates! 💕');
+                });
+            });
+        }
+
+        // CSS Animations
+        const styles = document.createElement('style');
+        styles.textContent = `
+            @keyframes sparkleFloat {
+                0% {
+                    transform: translateY(0) scale(1) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100px) scale(0) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes slideInRight {
+                0% {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                100% {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideOutRight {
+                0% {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(styles);
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            createFluffyClouds();
+            setupMobileMenu();
+            setupInteractiveEffects();
+
+            // Search functionality
+            document.getElementById('searchBtn').addEventListener('click', function() {
+                const query = document.getElementById('searchBox').value.trim();
+                if (query) {
+                    showNotification(`🔍 Searching for "${query}"... Coming soon! 💕`);
+                }
+            });
+
+            // Cart functionality
+            document.getElementById('cartBtn').addEventListener('click', function() {
+                showNotification('🛒 Cart page coming soon! Get ready to shop kawaii! 💖');
+            });
+
+            console.log('✨ About page loaded with all kawaii features! 💖');
+        });
+    </script>
+</body>
+</html>
